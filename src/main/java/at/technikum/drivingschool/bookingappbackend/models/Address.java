@@ -16,8 +16,20 @@ public class Address {
     private String city;
     private String country;
 
+    /**
+     * Address empty constructor
+     */
     public Address() {
     }
+
+    /**
+     * Address constructor
+     * @param street
+     * @param nr
+     * @param plz
+     * @param city
+     * @param country
+     */
     public Address(String street, String nr, String plz, String city, String country) {
         this.street = street;
         this.nr = nr;
@@ -26,16 +38,30 @@ public class Address {
         this.country = country;
     }
 
+    /**
+     * @return id
+     */
     public Integer getId() {
         return id;
     }
+
+    /**
+     * @param id
+     */
     public void setId(Integer id) {
         this.id = id;
     }
+
+    /**
+     * @return street information
+     */
     public String getStreet() {
         return street;
     }
 
+    /**
+     * @param street
+     */
     public void setStreet(String street) {
         this.street = street;
     }

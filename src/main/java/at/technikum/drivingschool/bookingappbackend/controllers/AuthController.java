@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Authentication Controller
- * Handling login, registration & logout
+ * Handling login, registration and logout
  */
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController

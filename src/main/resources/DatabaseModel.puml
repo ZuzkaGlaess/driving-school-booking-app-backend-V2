@@ -1,0 +1,81 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class User {
+    Long id
+    String name
+    String email
+    String password
+    Set<Role> roles
+    Gender gender
+    Date birthDate
+    Address address
+    String phoneNumber
+    String photoRef
+}
+
+class Role {
+    Long id
+    ERole name
+}
+
+enum ERole {
+    ROLE_STUDENT
+    ROLE_INSTRUCTOR
+    ROLE_ADMIN
+}
+
+enum Gender {
+    FEMALE
+    MALE
+    OTHER
+}
+
+class Address {
+    Long id
+    String street
+    String nr
+    String plz
+    String city
+    String country
+}
+
+User <|-- Role
+Role <|-- ERole
+User <|-- Gender
+User <|-- Address
+
+class Event {
+    Long id
+    String title
+    EEventType eventType
+    EEventStatus eventStatus
+    Long price
+    Date startDate
+}
+
+class Booking {
+    Long id
+    User user
+    Event event
+}
+
+enum EEventType {
+    THEORY
+    DRIVING
+    FIRST_AID
+    THEORY_EXAM
+    PRACTICAL_EXAM
+}
+
+enum EEventStatus {
+    GOOD
+    CANCELED
+}
+
+Booking <|-- User
+Booking <|-- Event
+Event <|-- EEventType
+Event <|-- EEventStatus
+
+@enduml

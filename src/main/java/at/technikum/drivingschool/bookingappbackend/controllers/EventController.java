@@ -5,6 +5,7 @@ import at.technikum.drivingschool.bookingappbackend.repository.EventRepository;
 import at.technikum.drivingschool.bookingappbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class EventController {
     }
 
     @GetMapping("/all")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllEvents() {
         List<Event> events = eventRepository.findAll();
         return ResponseEntity.ok().body(events);

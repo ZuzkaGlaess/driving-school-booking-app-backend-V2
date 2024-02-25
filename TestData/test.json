@@ -1,0 +1,37 @@
+Register:
+
+{
+"username": "zuzka",
+"email": "zuzka@gmail.com",
+"role": [
+"admin"
+],
+"password": "Adminadmin#1",
+"gender": "FEMALE",
+"other": "",
+"country": {
+"id": 1,
+"name": "Austria"
+}
+}
+
+Login:
+
+{
+"username": "zuzka",
+"password": "Adminadmin#1"
+}
+
+Update Profile:
+
+{
+"username": "zuzka",
+"email": "zuzka@gmail.com",
+"gender": "FEMALE",
+"other" : "some other data",
+"country": {
+"id": 2,
+"name": "Germany"
+}
+}
+

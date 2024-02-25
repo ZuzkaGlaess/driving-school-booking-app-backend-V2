@@ -47,11 +47,11 @@ Open `src/main/resources/DatabaseModel.puml`
 mvn spring-boot:run
 ```
 
-## Run following SQL insert statements on MariaDB
-Open `sql/roles.sql`
+## Verify DB content with SQL statements of this file
+Open `sql/dbqueries.sql`
 ```
-INSERT INTO roles(name) VALUES('ROLE_STUDENT');
-INSERT INTO roles(name) VALUES('ROLE_INSTRUCTOR');
-INSERT INTO roles(name) VALUES('ROLE_ADMIN');
+select * from dsbdb.roles;
+select * from dsbdb.country;
+select * from dsbdb.users;
 ```
 

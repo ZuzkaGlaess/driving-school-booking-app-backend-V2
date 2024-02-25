@@ -22,7 +22,6 @@ import at.technikum.drivingschool.bookingappbackend.security.jwt.AuthEntryPointJ
 import at.technikum.drivingschool.bookingappbackend.security.jwt.AuthTokenFilter;
 
 @Configuration
-//@EnableWebSecurity
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
 public class WebSecurityConfig {
   @Autowired
@@ -82,7 +81,7 @@ public class WebSecurityConfig {
     
     http.authenticationProvider(authenticationProvider());
 
-    // add filter to existing filter list
+    // add filter to existing filter list before username password filter
     http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     
     return http.build();

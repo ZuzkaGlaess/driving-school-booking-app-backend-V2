@@ -1,0 +1,50 @@
+package at.technikum.drivingschool.bookingappbackend.model;
+
+import jakarta.persistence.*;
+
+/**
+ * Booking record of user booking an event
+ */
+@Entity
+@Table(name = "bookings")
+public class Booking {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @OneToOne(fetch = FetchType.LAZY)
+    private User user;
+    @OneToOne(fetch = FetchType.LAZY)
+    private Event event;
+
+    public Booking() {
+    }
+
+    public Booking(User user, Event event) {
+        this.user = user;
+        this.event = event;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Event getEvent() {
+        return event;
+    }
+
+    public void setEvent(Event event) {
+        this.event = event;
+    }
+}

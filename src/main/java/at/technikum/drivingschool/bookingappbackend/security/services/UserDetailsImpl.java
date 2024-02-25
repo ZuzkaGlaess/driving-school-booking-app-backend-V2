@@ -9,7 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import at.technikum.drivingschool.bookingappbackend.models.User;
+import at.technikum.drivingschool.bookingappbackend.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**

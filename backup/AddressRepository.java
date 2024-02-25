@@ -1,13 +1,12 @@
 package at.technikum.drivingschool.bookingappbackend.repository;
 
-import at.technikum.drivingschool.bookingappbackend.model.Event;
+import at.technikum.drivingschool.bookingappbackend.model.Address;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 /**
- * CRUD for {@link Event}
+ * CRUD from {@link Address}
  */
 @Repository
-public interface EventRepository extends JpaRepository<Event, Long> {
-
+public interface AddressRepository extends JpaRepository<Address, Long> {
 }

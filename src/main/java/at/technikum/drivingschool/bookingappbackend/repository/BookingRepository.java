@@ -1,6 +1,6 @@
 package at.technikum.drivingschool.bookingappbackend.repository;
 
-import at.technikum.drivingschool.bookingappbackend.models.Booking;
+import at.technikum.drivingschool.bookingappbackend.model.Booking;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -18,6 +18,6 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
      * @param userId
      * @return list of bookings
      */
-    @Query("SELECT b FROM Booking b WHERE b.user.id == ?1")
+    @Query("SELECT b FROM Booking b WHERE b.user.id = ?1")
     public List<Booking> findAllBookingsForUser(Long userId);
 }

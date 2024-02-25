@@ -5,8 +5,8 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import at.technikum.drivingschool.bookingappbackend.models.ERole;
-import at.technikum.drivingschool.bookingappbackend.models.Role;
+import at.technikum.drivingschool.bookingappbackend.model.ERole;
+import at.technikum.drivingschool.bookingappbackend.model.Role;
 
 /**
  * CRUD for {@link Role}

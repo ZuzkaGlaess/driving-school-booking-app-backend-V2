@@ -31,6 +31,7 @@ jwt.expirationMs=86400000
 ```
 
 ### Swagger configuration
+Access over: http://localhost:8080/swagger.html
 ```
 springdoc.api-docs.path=/api/docs
 springdoc.swagger-ui.path=/swagger.html
@@ -38,9 +39,9 @@ springdoc.swagger-ui.path=/swagger.html
 
 ## DB Class model
 
-Open `src/main/resources/DatabaseModel.puml`
+Open `src/main/resources/DBModel.plantuml`
 
-![booking-app-backend](src/main/resources/DatabaseModel.png)
+![booking-app-backend](src/main/resources/DBModel.png)
 
 ## Run Spring Boot application
 ```

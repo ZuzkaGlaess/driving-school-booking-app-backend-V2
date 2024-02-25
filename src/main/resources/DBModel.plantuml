@@ -1,0 +1,83 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class Booking {
+  + Booking(User, Event): 
+  + Booking(): 
+  - user: User
+  - id: Long
+  - event: Event
+}
+class Country {
+  + Country(): 
+  + Country(Long, String): 
+  + Country(String): 
+  - name: String
+  - id: Long
+}
+enum EEventStatus << enumeration >> {
+  + EEventStatus(): 
+  + GOOD: 
+  + CANCELED: 
+}
+enum EEventType << enumeration >> {
+  + EEventType(): 
+  + DRIVING: 
+  + THEORY_EXAM: 
+  + PRACTICAL_EXAM: 
+  + THEORY: 
+  + FIRST_AID: 
+}
+enum EGender << enumeration >> {
+  + EGender(): 
+  + MALE: 
+  + FEMALE: 
+  + OTHER: 
+}
+enum ERole << enumeration >> {
+  + ERole(): 
+  + ROLE_ADMIN: 
+  + ROLE_STUDENT: 
+  + ROLE_INSTRUCTOR: 
+}
+class Event {
+  + Event(String, EEventType, EEventStatus, Long, Date): 
+  + Event(): 
+  - eventType: EEventType
+  - eventStatus: EEventStatus
+  - title: String
+  - price: Long
+  - startDate: Date
+  - id: Long
+}
+class Role {
+  + Role(): 
+  + Role(ERole): 
+  - id: Integer
+  - name: ERole
+}
+class User {
+  + User(): 
+  + User(String, String, String, EGender, String, Country): 
+  - password: String
+  - country: Country
+  - email: String
+  - id: Long
+  - username: String
+  - roles: Set<Role>
+  - gender: EGender
+  - other: String
+}
+
+Booking      "1" *-[#595959,plain]-> "event\n1" Event        
+Booking      "1" *-[#595959,plain]-> "user\n1" User         
+Event        "1" *-[#595959,plain]-> "eventStatus\n1" EEventStatus 
+Event        "1" *-[#595959,plain]-> "eventType\n1" EEventType   
+Role         "1" *-[#595959,plain]-> "name\n1" ERole        
+User         "1" *-[#595959,plain]-> "country\n1" Country      
+User         "1" *-[#595959,plain]-> "gender\n1" EGender      
+User         "1" *-[#595959,plain]-> "roles\n*" Role         
+@enduml

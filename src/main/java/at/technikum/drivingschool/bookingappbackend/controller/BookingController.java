@@ -98,7 +98,7 @@ public class BookingController {
      * @param event
      * @return
      */
-    @PutMapping("/bookEvent")
+    @PostMapping("/bookEvent")
     // TODO: add method protection as soon as app is working
     // TODO: @PreAuthorize("hasRole('STUDENT')")
     public ResponseEntity<?> bookEvent(@RequestParam("event") Event event) {

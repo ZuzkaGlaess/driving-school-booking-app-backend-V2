@@ -114,6 +114,7 @@
 				<artifactId>maven-javadoc-plugin</artifactId>
 				<version>3.6.3</version>
 				<configuration>
+					<locale>en_US</locale>
 					<reportOutputDirectory>${project.basedir}/javadoc</reportOutputDirectory>
 					<show>public</show>
 				</configuration>

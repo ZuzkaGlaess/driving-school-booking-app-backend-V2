@@ -39,7 +39,7 @@ public class EventController {
      * @param event
      * @return
      */
-    @PutMapping("/createEvent")
+    @PostMapping("/createEvent")
     // TODO: add method protection as soon as app is working
     //@PreAuthorize("hasRole('INSTRUCTOR')")
     public ResponseEntity<?> createEvent(@Valid @RequestBody EventRequest event) {

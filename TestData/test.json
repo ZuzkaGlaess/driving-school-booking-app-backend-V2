@@ -35,3 +35,17 @@ Update Profile:
 }
 }
 
+Create Event:
+
+Event:
+
+{
+"title": "MyEvent",
+"eventType": "THEORY",
+"eventStatus": "GOOD",
+"price": 500,
+"startDate": "2024-02-31"
+}
+
+
+

@@ -18,6 +18,7 @@ import java.io.InputStream;
  * Handling picture up- and download of users
  * Pictures are stored in the configured MinIO bucket
  */
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/pictures")
 public class FileController {

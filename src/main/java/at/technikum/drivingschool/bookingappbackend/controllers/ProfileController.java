@@ -58,6 +58,11 @@ public class ProfileController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to get profile for user.");
     }
 
+    /**
+     * Update an existing user profile
+     * @param user
+     * @return
+     */
     @PostMapping("/userProfile")
     public ResponseEntity<?> updateUserProfile(@RequestParam("user") User user) {
         userRepository.save(user);

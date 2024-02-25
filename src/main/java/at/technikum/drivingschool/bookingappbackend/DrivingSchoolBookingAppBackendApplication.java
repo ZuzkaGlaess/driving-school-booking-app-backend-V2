@@ -9,9 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class DrivingSchoolBookingAppBackendApplication {
 
-    /**
-     * @param args
-     */
     public static void main(String[] args) {
         SpringApplication.run(DrivingSchoolBookingAppBackendApplication.class, args);
     }

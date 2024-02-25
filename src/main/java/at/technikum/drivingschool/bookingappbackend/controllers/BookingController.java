@@ -28,34 +28,62 @@ public class BookingController {
     @Autowired
     UserRepository userRepository;
 
+    /**
+     * get logged in user from security context and search for user in database
+     * @return user or null
+     */
     private User getLoggedInUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         return getUser(currentPrincipalName);
     }
 
+    /**
+     * find user with user id in database or return null
+     * @param userId
+     * @return user or null
+     */
     private User getUser(String userId) {
         Optional<User> user = userRepository.findByUsername(userId);
         return user.orElse(null);
     }
+
+    /**
+     * get all bookings in the system
+     * only admin should have access
+     * @return list of bookings
+     */
     @GetMapping("/all")
     // TODO: add method protection as soon as app is working
-    //@PreAuthorize("hasRole('ADMIN')")
+    // TODO: @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllBookings() {
         List<Booking> bookings = bookingRepository.findAll();
         return ResponseEntity.ok().body(bookings);
     }
+
+    /**
+     * get all bookings for specific user
+     * only admin should have access
+     * @param userId
+     * @return list of bookings of the user or empty
+     */
     @GetMapping("/allForUser/{userId}")
     // TODO: add method protection as soon as app is working
-    //@PreAuthorize("hasRole('ADMIN')")
+    // TODO: @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllForUser(@PathVariable("userId") Long userId ) {
         List<Booking> bookings = bookingRepository.findAllBookingsForUser(userId);
         return ResponseEntity.ok().body(new BookingListResponse(bookings));
     }
 
+    /**
+     * get all bookings of logged in student
+     * only student can access this method
+     * throws internal server error in case logged in user not found (could be security violation)
+     * @return list of bookings of the logged in user or empty
+     */
     @GetMapping("/myBookings")
     // TODO: add method protection as soon as app is working
-    //@PreAuthorize("hasRole('STUDENT')")
+    // TODO: @PreAuthorize("hasRole('STUDENT')")
     public ResponseEntity<?> getAllMyBookings() {
         User user = getLoggedInUser();
         if (user != null) {
@@ -66,13 +94,19 @@ public class BookingController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to get bookings for logged in user.");
     }
 
+    /**
+     * saves the booking for a specific event for logged in user
+     * @param event
+     * @return
+     */
     @PutMapping("/bookEvent")
     // TODO: add method protection as soon as app is working
-    //@PreAuthorize("hasRole('STUDENT')")
+    // TODO: @PreAuthorize("hasRole('STUDENT')")
     public ResponseEntity<?> bookEvent(@RequestParam("event") Event event) {
         User user = getLoggedInUser();
         if (user != null) {
             Booking newBooking = new Booking(user, event);
+            // saveAndFlush required to instant store record in database
             Booking savedBooking = bookingRepository.saveAndFlush(newBooking);
             return ResponseEntity.ok().body(savedBooking);
         }
@@ -80,13 +114,20 @@ public class BookingController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to book event for logged in user.");
     }
 
+    /**
+     * student cancels their own booking
+     * verifies if the booking belongs to this specific student, if not, not allowed to remove
+     * @param bookingId
+     * @return
+     */
     @DeleteMapping("/removeMyBooking")
     // TODO: add method protection as soon as app is working
-    //@PreAuthorize("hasRole('STUDENT')")
+    // TODO: @PreAuthorize("hasRole('STUDENT')")
     public ResponseEntity<?> removeMyBooking(@RequestParam("bookingId") Long bookingId) {
         User user = getLoggedInUser();
         if (user != null) {
             Booking booking = bookingRepository.findById(bookingId).orElse(null);
+            // check if user equals booking user
             if(booking != null && booking.getUser().getId().equals(user.getId())) {
                 bookingRepository.deleteById(bookingId);
                 return ResponseEntity.ok().body("Successfully removed booking");

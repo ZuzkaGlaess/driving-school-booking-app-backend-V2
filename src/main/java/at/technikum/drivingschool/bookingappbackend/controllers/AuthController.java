@@ -58,8 +58,12 @@ public class AuthController {
 
   /**
    * Login method
+   * called from the login form
+   * extracts from request username and password
+   * generates JWT token on successful login
+   * @return JWT token as cookie in header and user details in body
    */
-  @PostMapping("/signin")
+  @PostMapping("/login")
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
     Authentication authentication = authenticationManager
@@ -83,7 +87,11 @@ public class AuthController {
   }
 
   /**
-   * Registration Method
+   * User registration method
+   * verifies in database if user already exits
+   * username and email address must be unique in the system
+   * returns error message in case it already exists
+   * if ok it creates the user in database
    */
   @PostMapping("/signup")
   public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
@@ -103,6 +111,9 @@ public class AuthController {
     Set<String> strRoles = signUpRequest.getRole();
     Set<Role> roles = new HashSet<>();
 
+    // optional part in case user is allowed to select role, default role student
+    // admin assigns the role
+    // TODO: update method to only create users with student role
     if (strRoles == null) {
       Role userRole = roleRepository.findByName(ERole.ROLE_STUDENT)
           .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
@@ -138,11 +149,14 @@ public class AuthController {
 
   /**
    * Logout method
+   * sends empty JWT token to the browser
+   * browser will update cookie in cache, as cookie doesn't contain any valid data = session terminated
+   * additionally logout message is sent
    */
-  @PostMapping("/signout")
+  @PostMapping("/logout")
   public ResponseEntity<?> logoutUser() {
     ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
     return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
-        .body(new MessageResponse("You've been signed out!"));
+        .body(new MessageResponse("You've been logged out!"));
   }
 }

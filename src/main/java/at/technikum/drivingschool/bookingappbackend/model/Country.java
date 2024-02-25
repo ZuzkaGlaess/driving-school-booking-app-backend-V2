@@ -25,6 +25,11 @@ public class Country {
         this.name = name;
     }
 
+    public Country(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     /**
      * Unique table key
      * @return id

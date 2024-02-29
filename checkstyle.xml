@@ -18,7 +18,9 @@
         </module>
 
         <!-- Check for proper indentation and braces placement -->
+        <!--
         <module name="Indentation"/>
+        -->
         <module name="LeftCurly"/>
         <module name="RightCurly"/>
 

@@ -3,7 +3,6 @@ package at.technikum.drivingschool.bookingappbackend.dto.response;
 import at.technikum.drivingschool.bookingappbackend.model.Country;
 import at.technikum.drivingschool.bookingappbackend.model.EGender;
 
-import java.util.List;
 
 public class ProfileResponse {
 	private Long id;

@@ -43,7 +43,7 @@ public class EventController {
     // TODO: add method protection as soon as app is working
     //@PreAuthorize("hasRole('INSTRUCTOR')")
     public ResponseEntity<?> createEvent(@Valid @RequestBody EventRequest event) {
-        Event savedEvent = eventRepository.save(
+        eventRepository.save(
                 new Event(
                         event.getTitle(),
                         EEventType.valueOf(event.getEventType()),

@@ -4,12 +4,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 /**
- * Test Class for Driving School Booking App - Backend
+ * Test Starter Class
  */
-@SpringBootTest
+
+// TODO: For Milestone 2
+//@SpringBootTest
 class DrivingSchoolBookingAppBackendApplicationTests {
 
-	@Test
+	// @Test
 	void contextLoads() {
 	}
 

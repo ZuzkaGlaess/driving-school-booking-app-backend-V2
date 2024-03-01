@@ -10,3 +10,4 @@ INSERT INTO dsbdb.country (name) VALUES ('Brazil');
 INSERT INTO dsbdb.country (name) VALUES ('USA');
 INSERT INTO dsbdb.country (name) VALUES ('Italy');
 INSERT INTO dsbdb.country (name) VALUES ('China');
+INSERT INTO dsbdb.country (name) VALUES ('Belgium');

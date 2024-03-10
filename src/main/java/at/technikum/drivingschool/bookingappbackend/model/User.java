@@ -23,6 +23,7 @@ public class User {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+// @NotBlank means mandatory
   @NotBlank
   @Size(max = 20)
   private String username;

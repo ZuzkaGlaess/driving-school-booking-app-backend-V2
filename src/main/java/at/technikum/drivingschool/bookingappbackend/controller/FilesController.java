@@ -20,22 +20,22 @@ import java.io.InputStream;
  */
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/pictures")
-public class FileController {
+@RequestMapping("/api")
+public class FilesController {
 
     @Value("${minio.bucketName}")
     private String bucketName;
 
     private final MinioClient minioClient;
 
-    public FileController(MinioClient minioClient) {
+    public FilesController(MinioClient minioClient) {
         this.minioClient = minioClient;
     }
 
     /**
      * Upload of a new picture
      */
-    @PostMapping("/upload")
+    @PostMapping("/pictures")
     //@RolesAllowed({"ROLE_ADMIN","ROLE_STUDENT"})
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
         try {
@@ -54,7 +54,7 @@ public class FileController {
     /**
      * Download of an existing picture
      */
-    @GetMapping("/download/{fileName}")
+    @GetMapping("/pictures/{fileName}")
     //@RolesAllowed({"ROLE_ADMIN","ROLE_STUDENT"})
     public ResponseEntity<InputStreamResource> downloadFile(@PathVariable("fileName") String fileName) {
         try {

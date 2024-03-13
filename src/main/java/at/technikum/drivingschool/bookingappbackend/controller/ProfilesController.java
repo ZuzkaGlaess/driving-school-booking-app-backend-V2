@@ -16,12 +16,12 @@ import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/profile")
-public class ProfileController {
+@RequestMapping("/api")
+public class ProfilesController {
 
     @Autowired
     UserRepository userRepository;
-    public ProfileController() {
+    public ProfilesController() {
     }
 
     private User getLoggedInUser() {
@@ -43,7 +43,7 @@ public class ProfileController {
     /**
      * Retrieves the profile of the loggedin user
      */
-    @GetMapping("/userProfile")
+    @GetMapping("/profiles")
     public ResponseEntity<?> getUserProfile() {
         User user = getLoggedInUser();
         if (user != null) {
@@ -62,7 +62,7 @@ public class ProfileController {
     /**
      * Retrieves the profile of any user in the DB
      */
-    @GetMapping("/userProfile/{userId}")
+    @GetMapping("/profiles/{userId}")
     public ResponseEntity<?> getUserProfile(@PathVariable("userId") String userId) {
         User user = getUserById(Long.parseLong(userId));
         if (user != null) {
@@ -83,7 +83,7 @@ public class ProfileController {
      * @param profile
      * @return ok or error
      */
-    @PutMapping("/userProfile")
+    @PutMapping("/profiles")
     public ResponseEntity<?> updateUserProfile(@Valid @RequestBody ProfileRequest profile) {
         User user = getLoggedInUser();
         if (user != null) {

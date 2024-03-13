@@ -1,8 +1,6 @@
 package at.technikum.drivingschool.bookingappbackend.controller;
 
-import at.technikum.drivingschool.bookingappbackend.model.Booking;
-import at.technikum.drivingschool.bookingappbackend.model.Event;
-import at.technikum.drivingschool.bookingappbackend.model.User;
+import at.technikum.drivingschool.bookingappbackend.model.*;
 import at.technikum.drivingschool.bookingappbackend.dto.response.BookingListResponse;
 import at.technikum.drivingschool.bookingappbackend.repository.BookingRepository;
 import at.technikum.drivingschool.bookingappbackend.repository.UserRepository;
@@ -18,8 +16,8 @@ import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/booking")
-public class BookingController {
+@RequestMapping("/api")
+public class BookingsController {
 
     @Autowired
     BookingRepository bookingRepository;
@@ -48,16 +46,28 @@ public class BookingController {
     }
 
     /**
-     * get all bookings in the system
-     * only admin should have access
+     * get all bookings in the system if admin otherwise get all bookings of logged in student
+     * only admin or student can access
+     * throws internal server error in case logged in user not found (could be security violation)
      * @return list of bookings
      */
-    @GetMapping("/all")
+    @GetMapping("/bookings")
     // TODO: add method protection as soon as app is working
     // TODO: @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllBookings() {
-        List<Booking> bookings = bookingRepository.findAll();
-        return ResponseEntity.ok().body(bookings);
+        List<Booking> bookings = null;
+        User user = getLoggedInUser();
+        if (user != null) {
+            if (user.getRoles().contains(ERole.ROLE_ADMIN)) {
+               bookings = bookingRepository.findAll();
+            } else {
+                bookings = bookingRepository.findAllBookingsForUser(user.getId());
+            }
+            return ResponseEntity.ok().body(new BookingListResponse(bookings));
+        }
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to get bookings for logged in user.");
+
     }
 
     /**
@@ -66,7 +76,7 @@ public class BookingController {
      * @param userId
      * @return list of bookings of the user or empty
      */
-    @GetMapping("/allForUser/{userId}")
+    @GetMapping("/bookings/{userId}")
     // TODO: add method protection as soon as app is working
     // TODO: @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllForUser(@PathVariable("userId") Long userId ) {
@@ -74,31 +84,13 @@ public class BookingController {
         return ResponseEntity.ok().body(new BookingListResponse(bookings));
     }
 
-    /**
-     * get all bookings of logged in student
-     * only student can access this method
-     * throws internal server error in case logged in user not found (could be security violation)
-     * @return list of bookings of the logged in user or empty
-     */
-    @GetMapping("/myBookings")
-    // TODO: add method protection as soon as app is working
-    // TODO: @PreAuthorize("hasRole('STUDENT')")
-    public ResponseEntity<?> getAllMyBookings() {
-        User user = getLoggedInUser();
-        if (user != null) {
-            List<Booking> bookings = bookingRepository.findAllBookingsForUser(user.getId());
-            return ResponseEntity.ok().body(new BookingListResponse(bookings));
-        }
-
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to get bookings for logged in user.");
-    }
 
     /**
      * saves the booking for a specific event for logged in user
      * @param event
      * @return
      */
-    @PostMapping("/bookEvent")
+    @PostMapping("/bookings")
     // TODO: add method protection as soon as app is working
     // TODO: @PreAuthorize("hasRole('STUDENT')")
     public ResponseEntity<?> bookEvent(@RequestParam("event") Event event) {
@@ -119,7 +111,7 @@ public class BookingController {
      * @param bookingId
      * @return
      */
-    @DeleteMapping("/removeMyBooking")
+    @DeleteMapping("/bookings")
     // TODO: add method protection as soon as app is working
     // TODO: @PreAuthorize("hasRole('STUDENT')")
     public ResponseEntity<?> removeMyBooking(@RequestParam("bookingId") Long bookingId) {

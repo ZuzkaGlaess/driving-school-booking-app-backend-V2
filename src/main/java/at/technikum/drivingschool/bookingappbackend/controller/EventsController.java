@@ -15,19 +15,19 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/event")
-public class EventController {
+@RequestMapping("/api")
+public class EventsController {
 
     @Autowired
     EventRepository eventRepository;
-    public EventController() {
+    public EventsController() {
     }
 
     /**
      * Retrieve all saved events
      * @return List<Event>
      */
-    @GetMapping("/all")
+    @GetMapping("/events")
     //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllEvents() {
         List<Event> events = eventRepository.findAll();
@@ -39,7 +39,7 @@ public class EventController {
      * @param event
      * @return
      */
-    @PostMapping("/createEvent")
+    @PostMapping("/events")
     // TODO: add method protection as soon as app is working
     //@PreAuthorize("hasRole('INSTRUCTOR')")
     public ResponseEntity<?> createEvent(@Valid @RequestBody EventRequest event) {
@@ -54,7 +54,7 @@ public class EventController {
         return ResponseEntity.ok().body("Event saved successfully");
     }
 
-    @DeleteMapping("/deleteEvent")
+    @DeleteMapping("/events")
     // TODO: add method protection as soon as app is working
     //@PreAuthorize("hasRole('INSTRUCTOR')")
     public ResponseEntity<?> deleteEvent(@RequestParam("eventId") Long eventId) {

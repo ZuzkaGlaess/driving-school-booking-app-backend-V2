@@ -20,7 +20,7 @@ class Country {
 }
 enum EEventStatus << enumeration >> {
   + EEventStatus(): 
-  + GOOD: 
+  + BOOKED:
   + CANCELED: 
 }
 enum EEventType << enumeration >> {

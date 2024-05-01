@@ -8,6 +8,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -63,6 +64,7 @@ public class ProfilesController {
      * Retrieves the profile of any user in the DB
      */
     @GetMapping("/profiles/{userId}")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('INSTRUCTOR')")
     public ResponseEntity<?> getUserProfile(@PathVariable("userId") String userId) {
         User user = getUserById(Long.parseLong(userId));
         if (user != null) {
@@ -83,7 +85,9 @@ public class ProfilesController {
      * @param profile
      * @return ok or error
      */
+    // TODO admin part still missing
     @PutMapping("/profiles")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('STUDENT')")
     public ResponseEntity<?> updateUserProfile(@Valid @RequestBody ProfileRequest profile) {
         User user = getLoggedInUser();
         if (user != null) {

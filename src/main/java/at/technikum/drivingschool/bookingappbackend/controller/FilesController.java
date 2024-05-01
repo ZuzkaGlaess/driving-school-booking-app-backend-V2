@@ -9,6 +9,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -35,8 +36,9 @@ public class FilesController {
     /**
      * Upload of a new picture
      */
+    // TODO connect picture with the student
     @PostMapping("/pictures")
-    //@RolesAllowed({"ROLE_ADMIN","ROLE_STUDENT"})
+    @PreAuthorize("hasRole('ADMIN') or hasRole('STUDENT')")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
         try {
             InputStream inputStream = file.getInputStream();
@@ -55,7 +57,7 @@ public class FilesController {
      * Download of an existing picture
      */
     @GetMapping("/pictures/{fileName}")
-    //@RolesAllowed({"ROLE_ADMIN","ROLE_STUDENT"})
+    @PreAuthorize("hasRole('ADMIN') or hasRole('STUDENT')")
     public ResponseEntity<InputStreamResource> downloadFile(@PathVariable("fileName") String fileName) {
         try {
             InputStream stream = minioClient.getObject(

@@ -7,6 +7,7 @@ import at.technikum.drivingschool.bookingappbackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -52,8 +53,7 @@ public class BookingsController {
      * @return list of bookings
      */
     @GetMapping("/bookings")
-    // TODO: add method protection as soon as app is working
-    // TODO: @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('STUDENT')")
     public ResponseEntity<?> getAllBookings() {
         List<Booking> bookings = null;
         User user = getLoggedInUser();
@@ -77,8 +77,7 @@ public class BookingsController {
      * @return list of bookings of the user or empty
      */
     @GetMapping("/bookings/{userId}")
-    // TODO: add method protection as soon as app is working
-    // TODO: @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllForUser(@PathVariable("userId") Long userId ) {
         List<Booking> bookings = bookingRepository.findAllBookingsForUser(userId);
         return ResponseEntity.ok().body(new BookingListResponse(bookings));
@@ -91,8 +90,7 @@ public class BookingsController {
      * @return
      */
     @PostMapping("/bookings")
-    // TODO: add method protection as soon as app is working
-    // TODO: @PreAuthorize("hasRole('STUDENT')")
+    @PreAuthorize("hasRole('STUDENT')")
     public ResponseEntity<?> bookEvent(@RequestParam("event") Event event) {
         User user = getLoggedInUser();
         if (user != null) {
@@ -112,8 +110,7 @@ public class BookingsController {
      * @return
      */
     @DeleteMapping("/bookings")
-    // TODO: add method protection as soon as app is working
-    // TODO: @PreAuthorize("hasRole('STUDENT')")
+    @PreAuthorize("hasRole('STUDENT')")
     public ResponseEntity<?> removeMyBooking(@RequestParam("bookingId") Long bookingId) {
         User user = getLoggedInUser();
         if (user != null) {

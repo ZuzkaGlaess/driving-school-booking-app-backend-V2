@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - "master"
+      - "14-security-setup"
+      -  "div1.1"
+      - "country_feature"
 
 jobs:
   build:

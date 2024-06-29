@@ -3,7 +3,7 @@ package at.technikum.drivingschool.bookingappbackend.security.services;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import at.technikum.drivingschool.bookingappbackend.model.Role;
+//import at.technikum.drivingschool.bookingappbackend.model.Role;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -110,7 +110,7 @@ public class BookingsController {
      * @return
      */
     @DeleteMapping("/bookings")
-    @PreAuthorize("hasRole('STUDENT')")
+    @PreAuthorize("hasRole('STUDENT') or hasRole('ADMIN')")
     public ResponseEntity<?> removeMyBooking(@RequestParam("bookingId") Long bookingId) {
         User user = getLoggedInUser();
         if (user != null) {

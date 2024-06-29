@@ -71,7 +71,7 @@ public class WebSecurityConfig {
             // set path permissions
         .authorizeHttpRequests(auth -> 
           auth.requestMatchers("/api/auth/**").permitAll() // allow authentication and registration api
-              .requestMatchers("/api/test/**").permitAll() // allow test api - just for now
+//              .requestMatchers("/api/test/**").permitAll() // allow test api - just for now
                   .requestMatchers("/swagger.html").permitAll() // allow access to swagger
                   .requestMatchers("/swagger-ui/**").permitAll() // allow access to swagger
                   .requestMatchers("/api/docs/**").permitAll() // allow access to swagger

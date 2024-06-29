@@ -150,16 +150,16 @@ public class AuthController {
     return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
   }
 
-  /**
+  /*
    * Logout method
    * sends empty JWT token to the browser
    * browser will update cookie in cache, as cookie doesn't contain any valid data = session terminated
    * additionally logout message is sent
    */
-  @PostMapping("/logout")
+/*  @PostMapping("/logout")
   public ResponseEntity<?> logoutUser() {
     ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
     return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
         .body(new MessageResponse("You've been logged out!"));
-  }
+  }*/
 }

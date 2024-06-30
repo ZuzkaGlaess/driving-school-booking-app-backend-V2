@@ -62,7 +62,6 @@ public class RegistrationTest {
                 .andExpect(status().isOk())
                 .andExpect(content()
                         .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                //.andExpect(jsonPath("statusCode" , is(200)));
                 .andExpect(jsonPath("message", is("User registered successfully!")));
         assert(userRepository.findByUsername("benjamin").isPresent());
     }
@@ -80,8 +79,24 @@ public class RegistrationTest {
                 .andExpect(status().isOk())
                 .andExpect(content()
                         .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                //.andExpect(jsonPath("statusCode" , is(200)));
                 .andExpect(jsonPath("email", is("benjamin@gmail.com")))
                 .andExpect(cookie().exists("bookingCookie"));
+    }
+
+    @Test
+    @Order(4)
+    void loginTestFailure() throws Exception {
+        mockMvc.perform(post("/api/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\n" +
+                                "\"username\": \"benni\",\n" +
+                                "\"password\": \"Adminadmin#1\"\n" +
+                                "}")
+                )
+                .andExpect(status().isUnauthorized())
+                .andExpect(content()
+                        .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("error", is("Unauthorized")))
+                .andExpect(jsonPath("message", is("Bad credentials")));
     }
 }

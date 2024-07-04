@@ -21,7 +21,7 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Set projects Maven version to GitHub Action ID and Run Nr
-        run: mvn versions:set "-DnewVersion=1.${{ github.run.id }}.${{ github.run.number }}"
+        run: mvn versions:set "-DnewVersion=1.${{ github.run_id }}.${{ github.run_number }}"
       - name: Publish package
         run: mvn --batch-mode --file pom.xml deploy
         env:

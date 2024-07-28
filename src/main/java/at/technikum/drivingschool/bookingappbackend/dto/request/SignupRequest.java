@@ -7,19 +7,19 @@ import at.technikum.drivingschool.bookingappbackend.model.EGender;
 import jakarta.validation.constraints.*;
  
 public class SignupRequest {
-    @NotBlank
-    @Size(min = 3, max = 20)
+    @NotBlank(message = "Username not allowed to be empty")
+    @Size(min = 3, max = 20, message = "Username has to be 3 till 20 characters")
     private String username;
  
-    @NotBlank
-    @Size(max = 50)
-    @Email
+    @NotBlank(message = "Username not allowed to be empty")
+    @Size(max = 50, message = "Email max. 50 characters")
+    @Email(message = "Must be a well formated email address")
     private String email;
     
     private Set<String> role;
     
-    @NotBlank
-    @Size(min = 12, max = 30)
+    @NotBlank(message = "Password is not allowed to be empty")
+    @Size(min = 12, max = 30, message = "Password has to have min. 12 and max. 30 characters")
     private String password;
 
     private EGender gender;

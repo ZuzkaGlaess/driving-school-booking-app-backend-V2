@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import at.technikum.drivingschool.bookingappbackend.dto.response.CountryListResponse;
+import at.technikum.drivingschool.bookingappbackend.model.Country;
 import at.technikum.drivingschool.bookingappbackend.model.ERole;
 import at.technikum.drivingschool.bookingappbackend.model.Role;
 import at.technikum.drivingschool.bookingappbackend.model.User;
@@ -16,6 +18,7 @@ import at.technikum.drivingschool.bookingappbackend.repository.RoleRepository;
 import at.technikum.drivingschool.bookingappbackend.repository.UserRepository;
 import at.technikum.drivingschool.bookingappbackend.security.jwt.JwtUtils;
 import at.technikum.drivingschool.bookingappbackend.security.services.UserDetailsImpl;
+import at.technikum.drivingschool.bookingappbackend.service.CountryService;
 import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +30,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Authentication Controller
@@ -55,6 +54,9 @@ public class AuthController {
 
   @Autowired
   JwtUtils jwtUtils;
+
+  @Autowired
+  CountryService countryService;
 
   /**
    * Login method
@@ -148,6 +150,12 @@ public class AuthController {
     userRepository.save(user);
 
     return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+  }
+
+  @GetMapping("/countries")
+  public ResponseEntity<?> getAllCountries() {
+    List<Country> countries = countryService.getAllCountries();
+    return ResponseEntity.ok(new CountryListResponse(countries));
   }
 
   /*

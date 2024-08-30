@@ -17,8 +17,7 @@ public class EventRequest {
     @NotNull
     private Date startDate;
 
-    public String getTitle() {
-        return title;
+    public String getTitle() { return title;
     }
 
     public void setTitle(String title) {
@@ -56,4 +55,5 @@ public class EventRequest {
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
+
 }

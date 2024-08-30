@@ -64,8 +64,9 @@ public class ProfilesController {
      */
     @GetMapping("/profiles/{userId}")
     public ResponseEntity<?> getUserProfile(@PathVariable("userId") String userId) {
-        User user = getUserById(Long.parseLong(userId));
+
         if (user != null) {
+            User user = getUserById(Long.parseLong(userId));
             return ResponseEntity.ok().body(new ProfileResponse(
                     user.getId(),
                     user.getUsername(),
@@ -74,7 +75,6 @@ public class ProfilesController {
                     user.getCountry()
             ));
         }
-
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to get profile for user.");
     }
 

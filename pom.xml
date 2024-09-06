@@ -16,6 +16,21 @@
 	<properties>
 		<java.version>21</java.version>
 	</properties>
+
+	<repositories>
+		<repository>
+			<id>central</id>
+			<url>https://repo1.maven.org/maven2</url>
+		</repository>
+		<repository>
+			<id>github</id>
+			<url>https://maven.pkg.github.com/ZuzkaGlaess/driving-school-booking-app-backend-V2</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
 	<dependencies>
 
 		<dependency>
@@ -79,6 +94,16 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<scope>test</scope>
+		</dependency>
 		<!-- To be added later
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -124,4 +149,11 @@
 		</plugins>
 	</build>
 
+	<distributionManagement>
+		<repository>
+			<id>github</id>
+			<name>GitHub ZuzkaGlaess Apache Maven Packages</name>
+			<url>https://maven.pkg.github.com/ZuzkaGlaess/driving-school-booking-app-backend-V2</url>
+		</repository>
+	</distributionManagement>
 </project>

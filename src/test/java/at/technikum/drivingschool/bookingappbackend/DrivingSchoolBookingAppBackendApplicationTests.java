@@ -8,10 +8,10 @@ import org.springframework.boot.test.context.SpringBootTest;
  */
 
 // TODO: For Milestone 2
-//@SpringBootTest
+@SpringBootTest
 class DrivingSchoolBookingAppBackendApplicationTests {
 
-	// @Test
+	@Test
 	void contextLoads() {
 	}
 

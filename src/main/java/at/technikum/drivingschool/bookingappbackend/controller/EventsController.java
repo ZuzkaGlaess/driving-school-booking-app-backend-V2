@@ -9,6 +9,7 @@ import at.technikum.drivingschool.bookingappbackend.repository.EventRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,7 +29,7 @@ public class EventsController {
      * @return List<Event>
      */
     @GetMapping("/events")
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllEvents() {
         List<Event> events = eventRepository.findAll();
         return ResponseEntity.ok().body(new EventListResponse(events));
@@ -36,12 +37,12 @@ public class EventsController {
 
     /**
      * Create a new Event in the Database
+     * Instructor or Admin can create a new event
      * @param event
      * @return
      */
     @PostMapping("/events")
-    // TODO: add method protection as soon as app is working
-    //@PreAuthorize("hasRole('INSTRUCTOR')")
+    @PreAuthorize("hasRole('INSTRUCTOR') or hasRole('ADMIN')")
     public ResponseEntity<?> createEvent(@Valid @RequestBody EventRequest event) {
         eventRepository.save(
                 new Event(
@@ -54,9 +55,14 @@ public class EventsController {
         return ResponseEntity.ok().body("Event saved successfully");
     }
 
+    /**
+     * Delete Event in the Database
+     * Instructor or Admin can delete the event
+     * @param eventId
+     * @return
+     */
     @DeleteMapping("/events")
-    // TODO: add method protection as soon as app is working
-    //@PreAuthorize("hasRole('INSTRUCTOR')")
+    @PreAuthorize("hasRole('INSTRUCTOR') or hasRole('ADMIN')")
     public ResponseEntity<?> deleteEvent(@RequestParam("eventId") Long eventId) {
         eventRepository.deleteById(eventId);
         return ResponseEntity.ok().body("Event successfully deleted");

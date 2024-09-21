@@ -199,4 +199,7 @@ INSERT INTO country (name) VALUES ('Yemen');
 INSERT INTO country (name) VALUES ('Zambia');
 INSERT INTO country (name) VALUES ('Zimbabwe');
 
+-- Add Admin User
+insert into users (country_id,email,gender,other,password,username) values (1,'admin@gmail.com',0,'','$2a$10$7dg28uUgA23sfYgO4z.PmOU00.lHFE8oF/FBXCWGpdaFuGmvVjcBa','Admin');
+insert into user_roles (role_id, user_id) values (3, 1);
 -- List of Courses

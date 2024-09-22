@@ -2,6 +2,7 @@ package at.technikum.drivingschool.bookingappbackend.security.jwt;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.Optional;
 
 import at.technikum.drivingschool.bookingappbackend.security.services.UserDetailsImpl;
 import jakarta.servlet.http.Cookie;
@@ -13,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.util.WebUtils;
 
 import io.jsonwebtoken.*;
@@ -54,6 +56,16 @@ public class JwtUtils {
     } else {
       return null;
     }
+  }
+
+  public String extractTokenFromRequest(HttpServletRequest request) {
+    String token = request.getHeader("Authorization");
+
+    if (StringUtils.hasText(token) && token.startsWith("Bearer ")) {
+      return token.substring("Bearer ".length());
+    }
+
+    return null;
   }
 
   /**

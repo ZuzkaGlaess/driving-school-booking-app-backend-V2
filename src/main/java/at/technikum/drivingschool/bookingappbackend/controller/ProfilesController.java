@@ -44,6 +44,7 @@ public class ProfilesController {
     /**
      * Retrieves the profile of the loggedin user
      */
+    @CrossOrigin(origins = "*", maxAge = 3600)
     @GetMapping("/profiles")
     public ResponseEntity<?> getUserProfile() {
         User user = getLoggedInUser();

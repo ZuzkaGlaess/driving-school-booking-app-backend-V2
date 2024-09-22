@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 //import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 //import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,6 +21,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import at.technikum.drivingschool.bookingappbackend.security.jwt.AuthEntryPointJwt;
 import at.technikum.drivingschool.bookingappbackend.security.jwt.AuthTokenFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableMethodSecurity(securedEnabled = true, jsr250Enabled = true, prePostEnabled = true)
@@ -63,8 +71,10 @@ public class WebSecurityConfig {
    */
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    http.cors(cors -> cors.disable())
-            .csrf(csrf -> csrf.disable())
+
+    //http.cors(cors -> cors.disable())
+      http.cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource()))
+            .csrf(AbstractHttpConfigurer::disable)
             // set handler for unauthorized access
         .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
             // set session policy
@@ -86,5 +96,26 @@ public class WebSecurityConfig {
     http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     
     return http.build();
+  }
+
+  @Bean
+  public CorsConfigurationSource corsConfigurationSource() {
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    CorsConfiguration config = new CorsConfiguration();
+    /*List<String> origins = new ArrayList<String>();
+    origins.add("http://localhost:8080");
+    origins.add("http://localhost:63342");
+    config.setAllowedOrigins(origins);*/
+    List<String> originPatterns = new ArrayList<String>();
+    originPatterns.add("*");
+    config.setAllowedOriginPatterns(originPatterns);
+    config.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PUT"));
+    config.addAllowedHeader("*");
+    config.setAllowCredentials(true);
+    List<String> headers = new ArrayList<String>();
+    headers.add("Authorization");
+    config.setExposedHeaders(headers);
+    source.registerCorsConfiguration("/**", config);
+    return source;
   }
 }

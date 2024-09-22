@@ -2,7 +2,6 @@ package at.technikum.drivingschool.bookingappbackend.security.jwt;
 
 import java.security.Key;
 import java.util.Date;
-import java.util.Optional;
 
 import at.technikum.drivingschool.bookingappbackend.security.services.UserDetailsImpl;
 import jakarta.servlet.http.Cookie;

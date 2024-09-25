@@ -29,7 +29,7 @@ public class EventsController {
      * @return List<Event>
      */
     @GetMapping("/events")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('INSTRUCTOR') or hasRole('ADMIN') or hasRole('STUDENT')")
     public ResponseEntity<?> getAllEvents() {
         List<Event> events = eventRepository.findAll();
         return ResponseEntity.ok().body(new EventListResponse(events));

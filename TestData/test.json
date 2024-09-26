@@ -42,7 +42,7 @@ Event:
 {
 "title": "MyEvent",
 "eventType": "THEORY",
-"eventStatus": "OPEN",
+"eventStatus": "GOOD",
 "price": 500,
 "startDate": "2024-02-31"
 }

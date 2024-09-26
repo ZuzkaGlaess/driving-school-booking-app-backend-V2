@@ -1,5 +1,6 @@
 package at.technikum.drivingschool.bookingappbackend.controller;
 
+import at.technikum.drivingschool.bookingappbackend.dto.request.UpdateEventRequest;
 import at.technikum.drivingschool.bookingappbackend.model.EEventStatus;
 import at.technikum.drivingschool.bookingappbackend.model.EEventType;
 import at.technikum.drivingschool.bookingappbackend.model.Event;
@@ -13,6 +14,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -36,6 +38,22 @@ public class EventsController {
     }
 
     /**
+     * Retrieve one event by id
+     * Instructor or Admin can get a single event
+     * @return List<Event>
+     */
+    @GetMapping("/event")
+    @PreAuthorize("hasRole('INSTRUCTOR') or hasRole('ADMIN')")
+    public ResponseEntity<?> getEvent(@RequestParam("eventId") Long eventId) {
+        Optional<Event> event = eventRepository.findById(eventId);
+        if(event.isPresent()) {
+            return ResponseEntity.ok().body(event);
+        }
+
+        return ResponseEntity.status(404).body("{\"message\":\"Event not Found\"}");
+    }
+
+    /**
      * Create a new Event in the Database
      * Instructor or Admin can create a new event
      * @param event
@@ -52,7 +70,28 @@ public class EventsController {
                         event.getPrice(),
                         event.getStartDate()
                         ));
-        return ResponseEntity.ok().body("Event saved successfully");
+        return ResponseEntity.ok().body("{\"message\":\"Event saved successfully\"}");
+    }
+
+    /**
+     * Create a new Event in the Database
+     * Instructor or Admin can create a new event
+     * @param event
+     * @return
+     */
+    @PutMapping("/events")
+    @PreAuthorize("hasRole('INSTRUCTOR') or hasRole('ADMIN')")
+    public ResponseEntity<?> updateEvent(@Valid @RequestBody UpdateEventRequest event) {
+        eventRepository.save(
+                new Event(
+                        event.getId(),
+                        event.getTitle(),
+                        EEventType.valueOf(event.getEventType()),
+                        EEventStatus.valueOf(event.getEventStatus()),
+                        event.getPrice(),
+                        event.getStartDate()
+                ));
+        return ResponseEntity.ok().body("{\"message\":\"Event updated successfully\"}");
     }
 
     /**
@@ -62,10 +101,10 @@ public class EventsController {
      * @return
      */
     @DeleteMapping("/events")
-    @PreAuthorize("hasRole('INSTRUCTOR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteEvent(@RequestParam("eventId") Long eventId) {
         eventRepository.deleteById(eventId);
-        return ResponseEntity.ok().body("Event successfully deleted");
+        return ResponseEntity.ok().body("{\"message\":\"Event successfully deleted\"}");
     }
 
 

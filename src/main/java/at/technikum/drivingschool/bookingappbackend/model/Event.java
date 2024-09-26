@@ -34,6 +34,15 @@ public class Event {
         this.startDate = startDate;
     }
 
+    public Event(Long id, String title, EEventType eventType, EEventStatus eventStatus, Long price, Date startDate) {
+        this.id = id;
+        this.title = title;
+        this.eventType = eventType;
+        this.eventStatus = eventStatus;
+        this.price = price;
+        this.startDate = startDate;
+    }
+
     public Long getId() {
         return id;
     }

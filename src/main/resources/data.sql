@@ -206,7 +206,7 @@ insert into user_roles (role_id, user_id) values (3, 1);
 insert into users (country_id,email,gender,other,password,username) values (1,'instructor@gmail.com',2,'diverse','$2a$10$kz/zbH5Dcq6GKeHpGABbZOXX16SAgc0Lyd8pYuZV7eBHkX5Nsd2Bu','Instructor');
 insert into user_roles (role_id, user_id) values (2, 2);
 -- List of Courses
--- insert into events (id, price, start_date, title, event_status, event_type)  values (1, 500, '2024-11-15', 'Class A Course', 1, 1);
--- insert into events (id, price, start_date, title, event_status, event_type)  values (2, 200, '2024-11-21', 'Class A Exam', 1, 4);
--- insert into events (id, price, start_date, title, event_status, event_type)  values (3, 800, '2024-11-25', 'Class A Praxis', 1, 2);
+insert into events (id, price, start_date, title, event_status, event_type)  values (1, 500, '2024-11-15', 'Class A Course', 1, 1);
+insert into events (id, price, start_date, title, event_status, event_type)  values (2, 200, '2024-11-21', 'Class A Exam', 1, 4);
+insert into events (id, price, start_date, title, event_status, event_type)  values (3, 800, '2024-11-25', 'Class A Praxis', 1, 2);
 

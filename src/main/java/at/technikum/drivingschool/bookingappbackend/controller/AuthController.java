@@ -1,26 +1,16 @@
 package at.technikum.drivingschool.bookingappbackend.controller;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
-import at.technikum.drivingschool.bookingappbackend.dto.response.CountryListResponse;
-import at.technikum.drivingschool.bookingappbackend.model.Country;
-import at.technikum.drivingschool.bookingappbackend.model.ERole;
-import at.technikum.drivingschool.bookingappbackend.model.Role;
-import at.technikum.drivingschool.bookingappbackend.model.User;
 import at.technikum.drivingschool.bookingappbackend.dto.request.LoginRequest;
 import at.technikum.drivingschool.bookingappbackend.dto.request.SignupRequest;
+import at.technikum.drivingschool.bookingappbackend.dto.response.CountryListResponse;
 import at.technikum.drivingschool.bookingappbackend.dto.response.MessageResponse;
 import at.technikum.drivingschool.bookingappbackend.dto.response.UserInfoResponse;
-import at.technikum.drivingschool.bookingappbackend.repository.RoleRepository;
-import at.technikum.drivingschool.bookingappbackend.repository.UserRepository;
+import at.technikum.drivingschool.bookingappbackend.model.Country;
 import at.technikum.drivingschool.bookingappbackend.security.jwt.JwtUtils;
 import at.technikum.drivingschool.bookingappbackend.security.services.UserDetailsImpl;
 import at.technikum.drivingschool.bookingappbackend.service.CountryService;
+import at.technikum.drivingschool.bookingappbackend.service.UserService;
 import jakarta.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -29,8 +19,10 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Authentication Controller
@@ -44,19 +36,13 @@ public class AuthController {
   AuthenticationManager authenticationManager;
 
   @Autowired
-  UserRepository userRepository;
-
-  @Autowired
-  RoleRepository roleRepository;
-
-  @Autowired
-  PasswordEncoder encoder;
-
-  @Autowired
-  JwtUtils jwtUtils;
+  UserService userService;
 
   @Autowired
   CountryService countryService;
+
+  @Autowired
+  JwtUtils jwtUtils;
 
   /**
    * Login method
@@ -100,57 +86,12 @@ public class AuthController {
    */
   @PostMapping("/register")
   public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-    if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-      return ResponseEntity.badRequest().body(new MessageResponse("Error: Username is already taken!"));
+
+    if(userService.userAlreadyExists(signUpRequest.getUsername(), signUpRequest.getEmail())) {
+        return ResponseEntity.badRequest().body(new MessageResponse("Error: Username or Email is already in use!"));
     }
 
-    if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-      return ResponseEntity.badRequest().body(new MessageResponse("Error: Email is already in use!"));
-    }
-
-    // Create new user's account
-    User user = new User(signUpRequest.getUsername(),
-                         signUpRequest.getEmail(),
-                         encoder.encode(signUpRequest.getPassword()),
-                         signUpRequest.getGender(),
-                         signUpRequest.getOther(),
-                         signUpRequest.getCountry());
-
-    Set<String> strRoles = signUpRequest.getRole();
-    Set<Role> roles = new HashSet<>();
-
-    // optional part in case user is allowed to select role, default role student
-    // admin assigns the role
-    // TODO: update method to only create users with student role
-    if (strRoles == null) {
-      Role userRole = roleRepository.findByName(ERole.ROLE_STUDENT)
-          .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-      roles.add(userRole);
-    } else {
-      strRoles.forEach(role -> {
-        switch (role) {
-        case "admin":
-          Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-              .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-          roles.add(adminRole);
-
-          break;
-        case "inst":
-          Role modRole = roleRepository.findByName(ERole.ROLE_INSTRUCTOR)
-              .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-          roles.add(modRole);
-
-          break;
-        default:
-          Role userRole = roleRepository.findByName(ERole.ROLE_STUDENT)
-              .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-          roles.add(userRole);
-        }
-      });
-    }
-
-    user.setRoles(roles);
-    userRepository.save(user);
+    userService.registerUser(signUpRequest.getUsername(),signUpRequest.getEmail(),signUpRequest.getPassword(),signUpRequest.getGender(),signUpRequest.getOther(),signUpRequest.getCountry());
 
     return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
   }

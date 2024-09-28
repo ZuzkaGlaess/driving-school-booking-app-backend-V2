@@ -3,17 +3,13 @@ package at.technikum.drivingschool.bookingappbackend.controller;
 import at.technikum.drivingschool.bookingappbackend.dto.request.ProfileRequest;
 import at.technikum.drivingschool.bookingappbackend.dto.response.ProfileResponse;
 import at.technikum.drivingschool.bookingappbackend.model.User;
-import at.technikum.drivingschool.bookingappbackend.repository.UserRepository;
+import at.technikum.drivingschool.bookingappbackend.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -21,24 +17,8 @@ import java.util.Optional;
 public class ProfilesController {
 
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
     public ProfilesController() {
-    }
-
-    private User getLoggedInUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication.getName();
-        return getUser(currentPrincipalName);
-    }
-
-    private User getUser(String userName) {
-        Optional<User> user = userRepository.findByUsername(userName);
-        return user.orElse(null);
-    }
-
-    private User getUserById(Long userId) {
-        Optional<User> user = userRepository.findById(userId);
-        return user.orElse(null);
     }
 
     /**
@@ -47,7 +27,7 @@ public class ProfilesController {
     @CrossOrigin(origins = "*", maxAge = 3600)
     @GetMapping("/profiles")
     public ResponseEntity<?> getUserProfile() {
-        User user = getLoggedInUser();
+        User user = userService.getLoggedInUser();
         if (user != null) {
             return ResponseEntity.ok().body(new ProfileResponse(
                     user.getId(),
@@ -67,7 +47,7 @@ public class ProfilesController {
     @GetMapping("/profiles/{userId}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('INSTRUCTOR')")
     public ResponseEntity<?> getUserProfile(@PathVariable("userId") String userId) {
-        User user = getUserById(Long.parseLong(userId));
+        User user = userService.getUser(Long.parseLong(userId));
         if (user != null) {
             return ResponseEntity.ok().body(new ProfileResponse(
                     user.getId(),
@@ -90,7 +70,7 @@ public class ProfilesController {
     @PutMapping("/profiles")
     @PreAuthorize("hasRole('ADMIN') or hasRole('STUDENT')")
     public ResponseEntity<?> updateUserProfile(@Valid @RequestBody ProfileRequest profile) {
-        User user = getLoggedInUser();
+        User user = userService.getLoggedInUser();
         if (user != null) {
             user.setUsername(profile.getUsername());
             user.setEmail(profile.getEmail());
@@ -98,7 +78,7 @@ public class ProfilesController {
             user.setGender(profile.getGender());
             user.setCountry(profile.getCountry());
 
-            userRepository.save(user);
+            userService.updateUser(user);
 
             return ResponseEntity.ok().body("User updated");
         }
@@ -112,13 +92,12 @@ public class ProfilesController {
      * @param profileId
      * @return ok or error
      */
-    // TODO admin part still missing
     @DeleteMapping("/profiles")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> updateUserProfile(@Valid @RequestParam Long profileId) {
-        User user = getUserById(profileId);
+    public ResponseEntity<?> deleteUserProfile(@Valid @RequestParam Long profileId) {
+        User user = userService.getUser(profileId);
         if (user != null) {
-            userRepository.delete(user);
+            userService.deleteUser(user);
 
             return ResponseEntity.ok().body("User deleted");
         }

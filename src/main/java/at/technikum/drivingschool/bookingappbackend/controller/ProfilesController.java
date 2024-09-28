@@ -62,13 +62,12 @@ public class ProfilesController {
     }
 
     /**
-     * Update an existing user profile
+     * Update my own user profile
      * @param profile
      * @return ok or error
      */
-    // TODO admin part still missing
     @PutMapping("/profiles")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('STUDENT')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('INSTRUCTOR') or hasRole('STUDENT')")
     public ResponseEntity<?> updateUserProfile(@Valid @RequestBody ProfileRequest profile) {
         User user = userService.getLoggedInUser();
         if (user != null) {

@@ -18,8 +18,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@TestClassOrder(ClassOrderer.OrderAnnotation.class)
-@Order(2)
 public class ProfilesTest {
 
     @Autowired
@@ -46,7 +44,7 @@ public class ProfilesTest {
     }
 
     @Test
-    @Order(1)
+    @Order(31)
     public void getMyProfile() throws Exception {
         String jwtToken = getJWTToken();
 
@@ -60,7 +58,7 @@ public class ProfilesTest {
     }
 
     @Test
-    @Order(2)
+    @Order(32)
     public void getInstructorProfile() throws Exception {
         String jwtToken = getJWTToken();
 
@@ -74,7 +72,7 @@ public class ProfilesTest {
     }
 
     @Test
-    @Order(3)
+    @Order(33)
     public void updateMyProfile() throws Exception {
         String jwtToken = getJWTToken();
 
@@ -96,7 +94,7 @@ public class ProfilesTest {
     }
 
     @Test
-    @Order(4)
+    @Order(34)
     public void deleteStudentProfile() throws Exception {
         String jwtToken = getJWTToken();
 

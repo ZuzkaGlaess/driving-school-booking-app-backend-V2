@@ -18,8 +18,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@TestClassOrder(ClassOrderer.OrderAnnotation.class)
-@Order(3)
 public class RegistrationTest {
 
     @Autowired
@@ -32,14 +30,14 @@ public class RegistrationTest {
     private MockMvc mockMvc;
 
     @Test
-    @Order(1)
+    @Order(21)
     void contextLoads() throws Exception {
         assertThat(controller).isNotNull();
         assertThat(userRepository).isNotNull();
     }
 
     @Test
-    @Order(2)
+    @Order(22)
     void verifyRegistration() throws Exception {
         mockMvc.perform(post("/api/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -66,7 +64,7 @@ public class RegistrationTest {
     }
 
     @Test
-    @Order(3)
+    @Order(23)
     void loginTest() throws Exception {
         mockMvc.perform(post("/api/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -83,7 +81,7 @@ public class RegistrationTest {
     }
 
     @Test
-    @Order(4)
+    @Order(24)
     void loginTestFailure() throws Exception {
         mockMvc.perform(post("/api/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)

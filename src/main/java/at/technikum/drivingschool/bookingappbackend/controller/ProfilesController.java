@@ -106,4 +106,24 @@ public class ProfilesController {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to get profile for user.");
 
     }
+
+    /**
+     * Delete an existing user profile
+     * @param profileId
+     * @return ok or error
+     */
+    // TODO admin part still missing
+    @DeleteMapping("/profiles")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> updateUserProfile(@Valid @RequestParam Long profileId) {
+        User user = getUserById(profileId);
+        if (user != null) {
+            userRepository.delete(user);
+
+            return ResponseEntity.ok().body("User deleted");
+        }
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed delete profile for user.");
+
+    }
 }

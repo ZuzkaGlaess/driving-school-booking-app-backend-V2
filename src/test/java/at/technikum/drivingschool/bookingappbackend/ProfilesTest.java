@@ -82,12 +82,12 @@ public class ProfilesTest {
                 .header("Authorization", "Bearer " + jwtToken)
                 .content("{" +
                         "\"username\": \"Admin\",\n" +
-                        "\"email\": \"admin2@gmail.com\",\n" +
+                        "\"email\": \"admin@gmail.com\",\n" +
                         "\"gender\": \"MALE\",\n" +
                         "\"other\": \"\",\n" +
                         "\"country\": {" +
-                              "\"id\": 1,\n" +
-                               "\"name\": \"Austria\"\n" +
+                              "\"id\": 2,\n" +
+                               "\"name\": \"Afghanistan\"\n" +
                         "}\n" +
                         "}")
         ).andExpect(status().isOk());

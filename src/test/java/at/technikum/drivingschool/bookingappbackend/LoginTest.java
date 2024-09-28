@@ -1,10 +1,7 @@
 package at.technikum.drivingschool.bookingappbackend;
 
 import at.technikum.drivingschool.bookingappbackend.controller.AuthController;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,6 +17,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@TestClassOrder(ClassOrderer.OrderAnnotation.class)
+@Order(1)
 public class LoginTest {
     @Autowired
     private AuthController controller;

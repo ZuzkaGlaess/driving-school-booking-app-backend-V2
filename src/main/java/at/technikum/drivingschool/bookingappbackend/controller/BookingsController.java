@@ -4,6 +4,8 @@ import at.technikum.drivingschool.bookingappbackend.model.*;
 import at.technikum.drivingschool.bookingappbackend.dto.response.BookingListResponse;
 import at.technikum.drivingschool.bookingappbackend.repository.BookingRepository;
 import at.technikum.drivingschool.bookingappbackend.repository.UserRepository;
+import at.technikum.drivingschool.bookingappbackend.service.BookingsService;
+import at.technikum.drivingschool.bookingappbackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,30 +23,10 @@ import java.util.Optional;
 public class BookingsController {
 
     @Autowired
-    BookingRepository bookingRepository;
+    BookingsService bookingsService;
 
     @Autowired
-    UserRepository userRepository;
-
-    /**
-     * get logged in user from security context and search for user in database
-     * @return user or null
-     */
-    private User getLoggedInUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication.getName();
-        return getUser(currentPrincipalName);
-    }
-
-    /**
-     * find user with user id in database or return null
-     * @param userId
-     * @return user or null
-     */
-    private User getUser(String userId) {
-        Optional<User> user = userRepository.findByUsername(userId);
-        return user.orElse(null);
-    }
+    UserService userService;
 
     /**
      * get all bookings in the system if admin otherwise get all bookings of logged in student
@@ -56,12 +38,12 @@ public class BookingsController {
     @PreAuthorize("hasRole('ADMIN') or hasRole('STUDENT')")
     public ResponseEntity<?> getAllBookings() {
         List<Booking> bookings = null;
-        User user = getLoggedInUser();
+        User user = userService.getLoggedInUser();
         if (user != null) {
             if (user.getRoles().contains(ERole.ROLE_ADMIN)) {
-               bookings = bookingRepository.findAll();
+               bookings = bookingsService.getAllBookings();
             } else {
-                bookings = bookingRepository.findAllBookingsForUser(user.getId());
+                bookings = bookingsService.getAllBookingsForUser(user.getId());
             }
             return ResponseEntity.ok().body(new BookingListResponse(bookings));
         }
@@ -79,8 +61,7 @@ public class BookingsController {
     @GetMapping("/bookings/{userId}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllForUser(@PathVariable("userId") Long userId ) {
-        List<Booking> bookings = bookingRepository.findAllBookingsForUser(userId);
-        return ResponseEntity.ok().body(new BookingListResponse(bookings));
+        return ResponseEntity.ok().body(new BookingListResponse(bookingsService.getAllBookingsForUser(userId)));
     }
 
 
@@ -92,12 +73,9 @@ public class BookingsController {
     @PostMapping("/bookings")
     @PreAuthorize("hasRole('STUDENT')")
     public ResponseEntity<?> bookEvent(@RequestParam("event") Event event) {
-        User user = getLoggedInUser();
+        User user = userService.getLoggedInUser();
         if (user != null) {
-            Booking newBooking = new Booking(user, event);
-            // saveAndFlush required to instant store record in database
-            Booking savedBooking = bookingRepository.saveAndFlush(newBooking);
-            return ResponseEntity.ok().body(savedBooking);
+            return ResponseEntity.ok().body(bookingsService.bookEvent(user, event));
         }
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to book event for logged in user.");
@@ -112,14 +90,14 @@ public class BookingsController {
     @DeleteMapping("/bookings")
     @PreAuthorize("hasRole('STUDENT') or hasRole('ADMIN')")
     public ResponseEntity<?> removeMyBooking(@RequestParam("bookingId") Long bookingId) {
-        User user = getLoggedInUser();
+        User user = userService.getLoggedInUser();
         if (user != null) {
-            Booking booking = bookingRepository.findById(bookingId).orElse(null);
-            // check if user equals booking user
-            if(booking != null && booking.getUser().getId().equals(user.getId())) {
-                bookingRepository.deleteById(bookingId);
+            boolean result = bookingsService.deleteBooking(bookingId, user);
+            if(result) {
                 return ResponseEntity.ok().body("Successfully removed booking");
             }
+
+            return ResponseEntity.ok().body("Booking not found");
         }
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to remove booking for logged in user.");

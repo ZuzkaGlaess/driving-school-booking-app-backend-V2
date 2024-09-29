@@ -1,7 +1,10 @@
 package at.technikum.drivingschool.bookingappbackend.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.time.Instant;
 import java.util.Date;
 
 /**
@@ -22,6 +25,12 @@ public class Event {
     private EEventStatus eventStatus;
     private Long price;
     private Date startDate;
+
+    @CreationTimestamp
+    private Instant createdOn;
+
+    @UpdateTimestamp
+    private Instant lastUpdatedOn;
 
     public Event() {
     }
@@ -89,5 +98,21 @@ public class Event {
 
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
+    }
+
+    public Instant getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(Instant createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public Instant getLastUpdatedOn() {
+        return lastUpdatedOn;
+    }
+
+    public void setLastUpdatedOn(Instant lastUpdatedOn) {
+        this.lastUpdatedOn = lastUpdatedOn;
     }
 }

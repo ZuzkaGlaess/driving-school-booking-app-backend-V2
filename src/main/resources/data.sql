@@ -200,13 +200,13 @@ INSERT INTO country (name) VALUES ('Zambia');
 INSERT INTO country (name) VALUES ('Zimbabwe');
 
 -- Add Admin User
-insert into users (country_id,email,gender,other,password,username) values (1,'admin@gmail.com',0,'','$2a$10$7dg28uUgA23sfYgO4z.PmOU00.lHFE8oF/FBXCWGpdaFuGmvVjcBa','Admin');
+insert into users (country_id,email,gender,other,password,username,created_on,last_updated_on) values (1,'admin@gmail.com',0,'','$2a$10$7dg28uUgA23sfYgO4z.PmOU00.lHFE8oF/FBXCWGpdaFuGmvVjcBa','Admin', NOW(), NOW());
 insert into user_roles (role_id, user_id) values (3, 1);
 -- Add Instructor User
-insert into users (country_id,email,gender,other,password,username) values (1,'instructor@gmail.com',2,'diverse','$2a$10$kz/zbH5Dcq6GKeHpGABbZOXX16SAgc0Lyd8pYuZV7eBHkX5Nsd2Bu','Instructor');
+insert into users (country_id,email,gender,other,password,username,created_on,last_updated_on) values (1,'instructor@gmail.com',2,'diverse','$2a$10$kz/zbH5Dcq6GKeHpGABbZOXX16SAgc0Lyd8pYuZV7eBHkX5Nsd2Bu','Instructor', NOW(), NOW());
 insert into user_roles (role_id, user_id) values (2, 2);
 -- Add Student User
-insert into users (country_id,email,gender,other,password,username) values (1,'student@gmail.com',1,'','$2a$10$mHLqs6s4u1kkDrg0vSGGTe.kvEscJ/mWp0hJx0GWcIHoWr.ps9yFi','Student');
+insert into users (country_id,email,gender,other,password,username,created_on,last_updated_on) values (1,'student@gmail.com',1,'','$2a$10$mHLqs6s4u1kkDrg0vSGGTe.kvEscJ/mWp0hJx0GWcIHoWr.ps9yFi','Student', NOW(), NOW());
 insert into user_roles (role_id, user_id) values (1, 3);
 -- List of Courses
 -- insert into events (id, price, start_date, title, event_status, event_type)  values (1, 500, '2024-11-15', 'Class A Course', 1, 1);

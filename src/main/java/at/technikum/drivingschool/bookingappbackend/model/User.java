@@ -1,5 +1,6 @@
 package at.technikum.drivingschool.bookingappbackend.model;
 
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -7,6 +8,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 /**
  * User Class
@@ -43,6 +46,12 @@ public class User {
   private String other;
   @ManyToOne
   private Country country;
+
+  @CreationTimestamp
+  private Instant createdOn;
+
+  @UpdateTimestamp
+  private Instant lastUpdatedOn;
 
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(name = "user_roles", 
@@ -124,5 +133,21 @@ public class User {
 
   public void setOther(String other) {
     this.other = other;
+  }
+
+  public Instant getCreatedOn() {
+    return createdOn;
+  }
+
+  public void setCreatedOn(Instant createdOn) {
+    this.createdOn = createdOn;
+  }
+
+  public Instant getLastUpdatedOn() {
+    return lastUpdatedOn;
+  }
+
+  public void setLastUpdatedOn(Instant lastUpdatedOn) {
+    this.lastUpdatedOn = lastUpdatedOn;
   }
 }

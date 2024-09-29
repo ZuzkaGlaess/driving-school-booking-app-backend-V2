@@ -8,7 +8,7 @@ import jakarta.validation.constraints.*;
  
 public class SignupRequest {
     @NotBlank(message = "Username not allowed to be empty")
-    @Size(min = 3, max = 20, message = "Username has to be 3 till 20 characters")
+    @Size(min = 5, max = 20, message = "Username has to be 5 till 20 characters")
     private String username;
  
     @NotBlank(message = "Username not allowed to be empty")
@@ -19,7 +19,8 @@ public class SignupRequest {
     private Set<String> role;
     
     @NotBlank(message = "Password is not allowed to be empty")
-    @Size(min = 12, max = 30, message = "Password has to have min. 12 and max. 30 characters")
+    @Size(min = 8, max = 30, message = "Password has to have min. 8 and max. 30 characters")
+    //@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,30}$")
     private String password;
 
     private EGender gender;

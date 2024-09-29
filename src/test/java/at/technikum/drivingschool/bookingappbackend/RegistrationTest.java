@@ -2,10 +2,7 @@ package at.technikum.drivingschool.bookingappbackend;
 
 import at.technikum.drivingschool.bookingappbackend.controller.AuthController;
 import at.technikum.drivingschool.bookingappbackend.repository.UserRepository;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -33,14 +30,14 @@ public class RegistrationTest {
     private MockMvc mockMvc;
 
     @Test
-    @Order(1)
+    @Order(21)
     void contextLoads() throws Exception {
         assertThat(controller).isNotNull();
         assertThat(userRepository).isNotNull();
     }
 
     @Test
-    @Order(2)
+    @Order(22)
     void verifyRegistration() throws Exception {
         mockMvc.perform(post("/api/auth/register")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -67,7 +64,7 @@ public class RegistrationTest {
     }
 
     @Test
-    @Order(3)
+    @Order(23)
     void loginTest() throws Exception {
         mockMvc.perform(post("/api/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -84,7 +81,7 @@ public class RegistrationTest {
     }
 
     @Test
-    @Order(4)
+    @Order(24)
     void loginTestFailure() throws Exception {
         mockMvc.perform(post("/api/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)

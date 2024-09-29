@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>at.technikum.drivingschool</groupId>
 	<artifactId>booking-app-backend</artifactId>
-	<version>0.0.2</version>
+	<version>0.0.3</version>
 	<name>driving-school-booking-app-backend</name>
 	<description>driving-school-booking-app-backend</description>
 	<properties>

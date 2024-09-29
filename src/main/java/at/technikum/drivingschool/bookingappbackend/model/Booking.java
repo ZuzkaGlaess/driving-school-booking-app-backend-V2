@@ -1,6 +1,10 @@
 package at.technikum.drivingschool.bookingappbackend.model;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
+import java.time.Instant;
 
 /**
  * Booking record of user booking an event
@@ -15,6 +19,12 @@ public class Booking {
     private User user;
     @OneToOne(fetch = FetchType.LAZY)
     private Event event;
+
+    @CreationTimestamp
+    private Instant createdOn;
+
+    @UpdateTimestamp
+    private Instant lastUpdatedOn;
 
     public Booking() {
     }
@@ -46,5 +56,21 @@ public class Booking {
 
     public void setEvent(Event event) {
         this.event = event;
+    }
+
+    public Instant getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(Instant createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public Instant getLastUpdatedOn() {
+        return lastUpdatedOn;
+    }
+
+    public void setLastUpdatedOn(Instant lastUpdatedOn) {
+        this.lastUpdatedOn = lastUpdatedOn;
     }
 }

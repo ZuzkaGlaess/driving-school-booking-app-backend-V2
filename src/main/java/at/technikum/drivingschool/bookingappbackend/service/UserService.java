@@ -89,13 +89,14 @@ public class UserService {
      * @param country
      * @return
      */
-    public User registerUser(String username, String email, String password, EGender gender, String other, Country country) {
+    public User registerUser(String username, String email, String password, EGender gender, String other, Country country, String profilePictureRef) {
         User user = new User(username,
                 email,
                 encoder.encode(password),
                 gender,
                 other,
-                country);
+                country,
+                profilePictureRef);
 
         Set<Role> roles = new HashSet<>();
         Role userRole = roleRepository.findByName(ERole.ROLE_STUDENT)

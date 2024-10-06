@@ -17,8 +17,8 @@ services:
       BUCKET_PORT: 9000
       BUCKET_ACCESS_KEY: minioadmin
       BUCKET_ACCESS_SECRET: minioadminpw
-      BUCKET_NAME_PICTURES: pictures
       BUCKET_NAME_FILES: files
+      LOCALFILES_FILEPATH: images/
     ports:
       - "8080:8080"
     networks:

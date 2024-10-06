@@ -53,6 +53,8 @@ public class User {
   @UpdateTimestamp
   private Instant lastUpdatedOn;
 
+  private String profilePictureRef;
+
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(name = "user_roles", 
              joinColumns = @JoinColumn(name = "user_id"),
@@ -62,13 +64,14 @@ public class User {
   public User() {
   }
 
-  public User(String username, String email, String password, EGender gender, String other, Country country) {
+  public User(String username, String email, String password, EGender gender, String other, Country country, String profilePictureRef) {
     this.username = username;
     this.email = email;
     this.password = password;
     this.gender = gender;
     this.other = other;
     this.country = country;
+    this.profilePictureRef = profilePictureRef;
   }
 
   public Long getId() {
@@ -149,5 +152,13 @@ public class User {
 
   public void setLastUpdatedOn(Instant lastUpdatedOn) {
     this.lastUpdatedOn = lastUpdatedOn;
+  }
+
+  public String getProfilePictureRef() {
+    return profilePictureRef;
+  }
+
+  public void setProfilePictureRef(String profilePictureRef) {
+    this.profilePictureRef = profilePictureRef;
   }
 }

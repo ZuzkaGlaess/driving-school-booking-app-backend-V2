@@ -30,7 +30,9 @@ public class UserRepositoryTest {
                 "Zuzka!234567",
                 EGender.FEMALE,
                 "some other text",
-                new Country(Long.valueOf(1),"Austria")));
+                new Country(Long.valueOf(1),"Austria"),
+                        "")
+                );
         assertThat(userRepository.findByUsername("Zuzka")).isNotNull();
     }
 }

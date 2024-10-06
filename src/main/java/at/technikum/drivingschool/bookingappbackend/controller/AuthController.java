@@ -91,7 +91,7 @@ public class AuthController {
         return ResponseEntity.badRequest().body(new MessageResponse("Error: Username or Email is already in use!"));
     }
 
-    userService.registerUser(signUpRequest.getUsername(),signUpRequest.getEmail(),signUpRequest.getPassword(),signUpRequest.getGender(),signUpRequest.getOther(),signUpRequest.getCountry());
+    userService.registerUser(signUpRequest.getUsername(),signUpRequest.getEmail(),signUpRequest.getPassword(),signUpRequest.getGender(),signUpRequest.getOther(),signUpRequest.getCountry(),"");
 
     return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
   }

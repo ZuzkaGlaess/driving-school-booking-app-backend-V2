@@ -3,9 +3,6 @@ package at.technikum.drivingschool.bookingappbackend.repository;
 import at.technikum.drivingschool.bookingappbackend.model.Country;
 import at.technikum.drivingschool.bookingappbackend.model.EGender;
 import at.technikum.drivingschool.bookingappbackend.model.User;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

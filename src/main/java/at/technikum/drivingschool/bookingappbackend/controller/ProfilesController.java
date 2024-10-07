@@ -4,6 +4,7 @@ import at.technikum.drivingschool.bookingappbackend.dto.request.ProfileRequest;
 import at.technikum.drivingschool.bookingappbackend.dto.response.ProfileResponse;
 import at.technikum.drivingschool.bookingappbackend.model.User;
 import at.technikum.drivingschool.bookingappbackend.service.UserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
+@SecurityRequirement(name = "bearerAuth")
 @RequestMapping("/api")
 public class ProfilesController {
 

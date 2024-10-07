@@ -5,6 +5,7 @@ import at.technikum.drivingschool.bookingappbackend.dto.request.UpdateEventReque
 import at.technikum.drivingschool.bookingappbackend.dto.response.EventListResponse;
 import at.technikum.drivingschool.bookingappbackend.model.Event;
 import at.technikum.drivingschool.bookingappbackend.service.EventsService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
+@SecurityRequirement(name = "bearerAuth")
 @RequestMapping("/api")
 public class EventsController {
 

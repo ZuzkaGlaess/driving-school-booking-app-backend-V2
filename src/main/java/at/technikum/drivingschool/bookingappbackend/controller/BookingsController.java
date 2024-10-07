@@ -7,6 +7,7 @@ import at.technikum.drivingschool.bookingappbackend.model.Event;
 import at.technikum.drivingschool.bookingappbackend.model.User;
 import at.technikum.drivingschool.bookingappbackend.service.BookingsService;
 import at.technikum.drivingschool.bookingappbackend.service.UserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
+@SecurityRequirement(name = "bearerAuth")
 @RequestMapping("/api")
 public class BookingsController {
 

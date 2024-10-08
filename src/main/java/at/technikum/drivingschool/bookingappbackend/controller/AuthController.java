@@ -62,15 +62,15 @@ public class AuthController {
     UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
     String jwt = jwtUtils.generateTokenFromUsername(userDetails.getUsername());
-    ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
+    //ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
 
     List<String> roles = userDetails.getAuthorities().stream()
         .map(item -> item.getAuthority())
         .collect(Collectors.toList());
 
     return ResponseEntity.ok()
-            .headers(httpHeaders -> httpHeaders.add(HttpHeaders.SET_COOKIE, jwtCookie.toString()))
-            .headers(httpHeaders -> httpHeaders.add(HttpHeaders.AUTHORIZATION, jwt))
+      //      .headers(httpHeaders -> httpHeaders.add(HttpHeaders.SET_COOKIE, jwtCookie.toString()))
+            .headers(httpHeaders -> httpHeaders.add(HttpHeaders.AUTHORIZATION, "Bearer " + jwt))
         .body(new UserInfoResponse(userDetails.getId(),
                                    userDetails.getUsername(),
                                    userDetails.getEmail(),

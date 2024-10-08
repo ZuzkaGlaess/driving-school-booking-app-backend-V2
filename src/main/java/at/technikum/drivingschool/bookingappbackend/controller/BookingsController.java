@@ -1,11 +1,9 @@
 package at.technikum.drivingschool.bookingappbackend.controller;
 
 import at.technikum.drivingschool.bookingappbackend.dto.response.BookingListResponse;
-import at.technikum.drivingschool.bookingappbackend.model.Booking;
-import at.technikum.drivingschool.bookingappbackend.model.ERole;
-import at.technikum.drivingschool.bookingappbackend.model.Event;
-import at.technikum.drivingschool.bookingappbackend.model.User;
+import at.technikum.drivingschool.bookingappbackend.model.*;
 import at.technikum.drivingschool.bookingappbackend.service.BookingsService;
+import at.technikum.drivingschool.bookingappbackend.service.EventsService;
 import at.technikum.drivingschool.bookingappbackend.service.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +13,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -26,7 +26,21 @@ public class BookingsController {
     BookingsService bookingsService;
 
     @Autowired
+    EventsService eventsService;
+
+    @Autowired
     UserService userService;
+
+    private boolean isAdmin(User user) {
+        Set<Role> roles = user.getRoles();
+        if(!roles.isEmpty()) {
+            for (Role role : roles) {
+                if(role.getName().equals(ERole.ROLE_ADMIN)) return true;
+            }
+        }
+
+        return false;
+    }
 
     /**
      * get all bookings in the system if admin otherwise get all bookings of logged in student
@@ -40,7 +54,7 @@ public class BookingsController {
         List<Booking> bookings = null;
         User user = userService.getLoggedInUser();
         if (user != null) {
-            if (user.getRoles().contains(ERole.ROLE_ADMIN)) {
+            if (isAdmin(user)) {
                bookings = bookingsService.getAllBookings();
             } else {
                 bookings = bookingsService.getAllBookingsForUser(user.getId());
@@ -67,15 +81,20 @@ public class BookingsController {
 
     /**
      * saves the booking for a specific event for logged in user
-     * @param event
+     * @param eventId
      * @return
      */
     @PostMapping("/bookings")
     @PreAuthorize("hasRole('STUDENT')")
-    public ResponseEntity<?> bookEvent(@RequestParam("event") Event event) {
+    public ResponseEntity<?> bookEvent(@RequestParam("eventId") Long eventId) {
         User user = userService.getLoggedInUser();
+
         if (user != null) {
-            return ResponseEntity.ok().body(bookingsService.bookEvent(user, event));
+            Optional <Event> event = eventsService.getEvent(eventId);
+            if(event.isPresent()) {
+                return ResponseEntity.ok().body(bookingsService.bookEvent(user, event.get()));
+            }
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to get event in DB");
         }
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to book event for logged in user.");

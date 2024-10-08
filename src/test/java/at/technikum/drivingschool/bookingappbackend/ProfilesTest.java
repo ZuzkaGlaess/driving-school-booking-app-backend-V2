@@ -36,10 +36,11 @@ public class ProfilesTest {
                 .andExpect(content()
                         .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 
-                .andExpect(cookie().exists("bookingCookie"))
+                .andExpect(header().exists("Authorization"))
                 .andReturn();
 
-        jwtToken = result.getResponse().getHeaders("Authorization").get(0);
+        String jwtHeader = result.getResponse().getHeaders("Authorization").get(0);
+        jwtToken = jwtHeader.substring(7);
         return jwtToken;
     }
 

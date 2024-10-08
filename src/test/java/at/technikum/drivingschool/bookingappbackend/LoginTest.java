@@ -46,7 +46,7 @@ public class LoginTest {
                 .andExpect(content()
                         .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("email", is("admin@gmail.com")))
-                .andExpect(cookie().exists("bookingCookie"));
+                .andExpect(header().exists("Authorization"));
     }
 
     @Test

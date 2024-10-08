@@ -77,7 +77,7 @@ public class RegistrationTest {
                 .andExpect(content()
                         .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("email", is("benjamin@gmail.com")))
-                .andExpect(cookie().exists("bookingCookie"));
+                .andExpect(header().exists("Authorization"));
     }
 
     @Test

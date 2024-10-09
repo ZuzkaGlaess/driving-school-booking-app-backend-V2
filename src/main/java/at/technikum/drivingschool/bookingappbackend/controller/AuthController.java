@@ -9,15 +9,12 @@ import at.technikum.drivingschool.bookingappbackend.model.Country;
 import at.technikum.drivingschool.bookingappbackend.security.jwt.JwtUtils;
 import at.technikum.drivingschool.bookingappbackend.security.services.UserDetailsImpl;
 import at.technikum.drivingschool.bookingappbackend.service.CountryService;
+import at.technikum.drivingschool.bookingappbackend.service.LoginService;
 import at.technikum.drivingschool.bookingappbackend.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,13 +29,13 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/auth")
 public class AuthController {
   @Autowired
-  AuthenticationManager authenticationManager;
-
-  @Autowired
   UserService userService;
 
   @Autowired
   CountryService countryService;
+
+  @Autowired
+  LoginService loginService;
 
   @Autowired
   JwtUtils jwtUtils;
@@ -53,12 +50,7 @@ public class AuthController {
   @PostMapping("/login")
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
-    Authentication authentication = authenticationManager
-        .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-
-    SecurityContextHolder.getContext().setAuthentication(authentication);
-
-    UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+    UserDetailsImpl userDetails = loginService.login(loginRequest.getUsername(), loginRequest.getPassword());
 
     String jwt = jwtUtils.generateTokenFromUsername(userDetails.getUsername());
     //ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);

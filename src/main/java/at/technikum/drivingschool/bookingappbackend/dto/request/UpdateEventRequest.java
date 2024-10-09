@@ -6,8 +6,6 @@ import jakarta.validation.constraints.NotNull;
 import java.util.Date;
 
 public class UpdateEventRequest {
-    @NotNull
-    private Long id;
     @NotBlank
     private String title;
     @NotBlank
@@ -57,13 +55,5 @@ public class UpdateEventRequest {
 
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 }

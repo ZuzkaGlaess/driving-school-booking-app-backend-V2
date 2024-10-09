@@ -41,9 +41,9 @@ public class EventsController {
      * Instructor or Admin can get a single event
      * @return List<Event>
      */
-    @GetMapping("/event")
+    @GetMapping("/events/{eventId}")
     @PreAuthorize("hasRole('INSTRUCTOR') or hasRole('ADMIN')")
-    public ResponseEntity<?> getEvent(@RequestParam("eventId") Long eventId) {
+    public ResponseEntity<?> getEvent(@PathVariable("eventId") Long eventId) {
         Optional<Event> event = eventsService.getEvent(eventId);
         if(event.isPresent()) {
             return ResponseEntity.ok().body(event);
@@ -77,11 +77,11 @@ public class EventsController {
      * @param event
      * @return
      */
-    @PutMapping("/events")
+    @PutMapping("/events/{eventId}")
     @PreAuthorize("hasRole('INSTRUCTOR') or hasRole('ADMIN')")
-    public ResponseEntity<?> updateEvent(@Valid @RequestBody UpdateEventRequest event) {
+    public ResponseEntity<?> updateEvent(@PathVariable("eventId") Long eventId, @Valid @RequestBody UpdateEventRequest event) {
         eventsService.updateEvent(
-                event.getId(),
+                eventId,
                 event.getTitle(),
                 event.getEventType(),
                 event.getEventStatus(),
@@ -97,9 +97,9 @@ public class EventsController {
      * @param eventId
      * @return
      */
-    @DeleteMapping("/events")
+    @DeleteMapping("/events/{eventId}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> deleteEvent(@RequestParam("eventId") Long eventId) {
+    public ResponseEntity<?> deleteEvent(@PathVariable("eventId") Long eventId) {
         eventsService.deleteEvent(eventId);
         return ResponseEntity.ok().body("{\"message\":\"Event successfully deleted\"}");
     }

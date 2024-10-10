@@ -106,9 +106,9 @@ public class BookingsController {
      * @param bookingId
      * @return
      */
-    @DeleteMapping("/bookings")
+    @DeleteMapping("/bookings/{bookingId}")
     @PreAuthorize("hasRole('STUDENT') or hasRole('ADMIN')")
-    public ResponseEntity<?> removeMyBooking(@RequestParam("bookingId") Long bookingId) {
+    public ResponseEntity<?> removeMyBooking(@PathVariable("bookingId") Long bookingId) {
         User user = userService.getLoggedInUser();
         if (user != null) {
             boolean result = bookingsService.deleteBooking(bookingId, user);

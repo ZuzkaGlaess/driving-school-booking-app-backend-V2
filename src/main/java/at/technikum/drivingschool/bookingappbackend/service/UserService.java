@@ -106,6 +106,35 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    /**
+     * register new User automatically as student
+     *
+     * @param username
+     * @param email
+     * @param password
+     * @param gender
+     * @param other
+     * @param country
+     * @return
+     */
+    public User createUser(String username, String email, String password, EGender gender, String other, Country country, ERole role, String profilePictureRef) {
+        User user = new User(username,
+                email,
+                encoder.encode(password),
+                gender,
+                other,
+                country,
+                profilePictureRef);
+
+        Set<Role> roles = new HashSet<>();
+        Role userRole = roleRepository.findByName(role)
+                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+        roles.add(userRole);
+
+        user.setRoles(roles);
+        return userRepository.save(user);
+    }
+
     public void updateUser(User user) {
         userRepository.save(user);
     }

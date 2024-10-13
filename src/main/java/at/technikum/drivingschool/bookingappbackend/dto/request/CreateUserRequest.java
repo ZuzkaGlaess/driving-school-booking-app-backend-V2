@@ -2,11 +2,12 @@ package at.technikum.drivingschool.bookingappbackend.dto.request;
 
 import at.technikum.drivingschool.bookingappbackend.model.Country;
 import at.technikum.drivingschool.bookingappbackend.model.EGender;
+import at.technikum.drivingschool.bookingappbackend.model.ERole;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
- 
-public class SignupRequest {
+
+public class CreateUserRequest {
     @NotBlank(message = "Username not allowed to be empty")
     @Size(min = 5, max = 20, message = "Username has to be 5 till 20 characters")
     private String username;
@@ -15,7 +16,9 @@ public class SignupRequest {
     @Size(max = 50, message = "Email max. 50 characters")
     @Email(message = "Must be a well formated email address")
     private String email;
-
+    
+    private ERole role;
+    
     @NotBlank(message = "Password is not allowed to be empty")
     @Size(min = 8, max = 30, message = "Password has to have min. 8 and max. 30 characters")
     //@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,30}$")
@@ -48,6 +51,14 @@ public class SignupRequest {
  
     public void setPassword(String password) {
         this.password = password;
+    }
+    
+    public ERole getRole() {
+      return this.role;
+    }
+    
+    public void setRole(ERole role) {
+      this.role = role;
     }
 
     public EGender getGender() {

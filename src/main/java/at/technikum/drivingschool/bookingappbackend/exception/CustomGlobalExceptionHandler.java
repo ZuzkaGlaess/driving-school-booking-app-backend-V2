@@ -36,31 +36,31 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     }
 
     @ExceptionHandler(BookingNotFoundException.class)
-    public ResponseEntity<ErrorResponse<String>> handleUserNotFoundException(BookingNotFoundException ex) {
+    public ResponseEntity<ErrorResponse<String>> handleBookingNotFoundException(BookingNotFoundException ex) {
         ErrorResponse<String> response = new ErrorResponse<>("error", ex.getMessage(), null);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
     @ExceptionHandler(FileUploadException.class)
-    public ResponseEntity<ErrorResponse<String>> handleUserNotFoundException(FileUploadException ex) {
+    public ResponseEntity<ErrorResponse<String>> handleFileUploadException(FileUploadException ex) {
         ErrorResponse<String> response = new ErrorResponse<>("error", ex.getMessage(), null);
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(response);
     }
 
     @ExceptionHandler(FileDownloadException.class)
-    public ResponseEntity<ErrorResponse<String>> handleUserNotFoundException(FileDownloadException ex) {
+    public ResponseEntity<ErrorResponse<String>> handleFileDownloadException(FileDownloadException ex) {
         ErrorResponse<String> response = new ErrorResponse<>("error", ex.getMessage(), null);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
     @ExceptionHandler(EventNotFoundException.class)
-    public ResponseEntity<ErrorResponse<String>> handleUserNotFoundException(EventNotFoundException ex) {
+    public ResponseEntity<ErrorResponse<String>> handleEventNotFoundException(EventNotFoundException ex) {
         ErrorResponse<String> response = new ErrorResponse<>("error", ex.getMessage(), null);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
     @ExceptionHandler(UserAlreadyExistsException.class)
-    public ResponseEntity<ErrorResponse<String>> handleUserNotFoundException(UserAlreadyExistsException ex) {
+    public ResponseEntity<ErrorResponse<String>> handleUserAlreadyExitsException(UserAlreadyExistsException ex) {
         ErrorResponse<String> response = new ErrorResponse<>("error", ex.getMessage(), null);
         return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
     }
@@ -76,6 +76,17 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         ErrorResponse<String> response = new ErrorResponse<>("error", "An unexpected error occurred", null);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
+
+//    @ExceptionHandler(MethodArgumentNotValidException.class)
+//    public ResponseEntity<ErrorResponse<List<String>>> handleValidationException(MethodArgumentNotValidException ex) {
+//        List<String> errors = ex.getBindingResult()
+//                .getFieldErrors()
+//                .stream()
+//                .map(DefaultMessageSourceResolvable::getDefaultMessage)
+//                .collect(Collectors.toList());
+//        ErrorResponse<List<String>> response = new ErrorResponse<>("error", "Validation failed", errors);
+//        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+//    }
 
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
                                                                   HttpHeaders headers,
@@ -97,5 +108,4 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         return new ResponseEntity<>(body, headers, status);
 
     }
-
 }

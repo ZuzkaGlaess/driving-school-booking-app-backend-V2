@@ -1,9 +1,11 @@
 package at.technikum.drivingschool.bookingappbackend.controller;
 
+import at.technikum.drivingschool.bookingappbackend.dto.request.CreateUserRequest;
 import at.technikum.drivingschool.bookingappbackend.dto.request.ProfileRequest;
 import at.technikum.drivingschool.bookingappbackend.dto.response.MessageResponse;
 import at.technikum.drivingschool.bookingappbackend.dto.response.ProfileResponse;
 import at.technikum.drivingschool.bookingappbackend.dto.response.UserListResponse;
+import at.technikum.drivingschool.bookingappbackend.exception.UserAlreadyExistsException;
 import at.technikum.drivingschool.bookingappbackend.exception.UserNotFoundException;
 import at.technikum.drivingschool.bookingappbackend.model.User;
 import at.technikum.drivingschool.bookingappbackend.service.UserService;
@@ -53,7 +55,9 @@ public class ProfilesController {
     @GetMapping("/profiles")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getAllUserProfiles() {
-        return ResponseEntity.ok().body(new UserListResponse(userService.getAllUsers()));
+        UserListResponse userList = new UserListResponse();
+        userList.initWith(userService.getAllUsers());
+        return ResponseEntity.ok().body(userList);
     }
 
     /**
@@ -135,5 +139,25 @@ public class ProfilesController {
         userService.deleteUser(user);
 
         return ResponseEntity.ok().body(new MessageResponse("User deleted"));
+    }
+
+    @PostMapping("/profiles")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<?> createUser(@Valid @RequestBody CreateUserRequest createUserRequest) {
+
+        if(userService.userAlreadyExists(createUserRequest.getUsername(), createUserRequest.getEmail())) {
+            throw new UserAlreadyExistsException("Username or Email is already in use!");
+        }
+
+        userService.createUser(createUserRequest.getUsername(),
+                createUserRequest.getEmail(),
+                createUserRequest.getPassword(),
+                createUserRequest.getGender(),
+                createUserRequest.getOther(),
+                createUserRequest.getCountry(),
+                createUserRequest.getRole(),
+                "");
+
+        return ResponseEntity.ok(new MessageResponse("User created successfully!"));
     }
 }

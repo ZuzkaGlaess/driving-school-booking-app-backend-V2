@@ -8,6 +8,9 @@ public class UserInfoResponse {
 	private String email;
 	private List<String> roles;
 
+	public UserInfoResponse() {
+	}
+
 	public UserInfoResponse(Long id, String username, String email, List<String> roles) {
 		this.id = id;
 		this.username = username;
@@ -41,5 +44,9 @@ public class UserInfoResponse {
 
 	public List<String> getRoles() {
 		return roles;
+	}
+
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
 	}
 }

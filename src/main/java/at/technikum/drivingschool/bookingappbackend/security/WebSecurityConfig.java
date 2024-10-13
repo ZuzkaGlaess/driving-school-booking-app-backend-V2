@@ -73,7 +73,7 @@ public class WebSecurityConfig {
       http.cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource()))
             .csrf(AbstractHttpConfigurer::disable)
             // set handler for unauthorized access
-        .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
+        //.exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
             // set session policy
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             // set path permissions

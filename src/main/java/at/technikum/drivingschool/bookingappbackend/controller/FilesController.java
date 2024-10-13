@@ -1,5 +1,8 @@
 package at.technikum.drivingschool.bookingappbackend.controller;
 
+import at.technikum.drivingschool.bookingappbackend.exception.FileDownloadException;
+import at.technikum.drivingschool.bookingappbackend.exception.FileUploadException;
+import at.technikum.drivingschool.bookingappbackend.exception.UserNotFoundException;
 import at.technikum.drivingschool.bookingappbackend.model.User;
 import at.technikum.drivingschool.bookingappbackend.service.IFilesService;
 import at.technikum.drivingschool.bookingappbackend.service.UserService;
@@ -8,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -39,32 +41,31 @@ public class FilesController {
      * @param file
      * @return
      */
-    @PostMapping(value="/pictures", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(value = "/pictures", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     @PreAuthorize("hasRole('ADMIN') or hasRole('INSTRUCTOR') or hasRole('STUDENT')")
     public ResponseEntity<String> uploadPicture(@RequestParam("picture") MultipartFile file) {
-        User user = userService.getLoggedInUser();
-        if(user != null) {
-            String contentType = file.getContentType();
-            if(contentType != null && contentType.startsWith("image")) {
-                String filename = filesService.uploadFile(file);
-                if (filename != null) {
-                    user.setProfilePictureRef(filename);
-                    userService.updateUser(user);
+        User user = userService.getLoggedInUser().orElseThrow(() -> new UserNotFoundException("Failed to get logged in user from db."));
 
-                    return ResponseEntity.ok("{ \"pictureName\": \"" + filename + "\" }");
-                }
-            } else {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("File is not an picture.");
+        String contentType = file.getContentType();
+        if (contentType != null && contentType.startsWith("image")) {
+            String filename = filesService.uploadFile(file);
+            if (filename != null) {
+                user.setProfilePictureRef(filename);
+                userService.updateUser(user);
+
+                return ResponseEntity.ok("{ \"pictureName\": \"" + filename + "\" }");
             }
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload file.");
+        } else {
+            throw new FileUploadException("File is not an picture.");
         }
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("User not found");
+
+        throw new FileUploadException("Failed to upload file.");
     }
 
     /**
      * Download of an existing picture
      */
-    @GetMapping(value="/pictures/{name}", produces = {MediaType.APPLICATION_OCTET_STREAM_VALUE})
+    @GetMapping(value = "/pictures/{name}", produces = {MediaType.APPLICATION_OCTET_STREAM_VALUE})
     @PreAuthorize("hasRole('ADMIN') or hasRole('INSTRUCTOR') or hasRole('STUDENT')")
     public ResponseEntity<InputStreamResource> downloadPicture(@PathVariable("name") String name) {
         Resource file = filesService.getFile(name);
@@ -78,9 +79,9 @@ public class FilesController {
                         .contentType(MediaType.APPLICATION_OCTET_STREAM)
                         .body(new InputStreamResource(file.getInputStream()));
             } catch (IOException ex) {
-                ex.printStackTrace();
+                throw new FileDownloadException(ex);
             }
         }
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        throw new FileDownloadException("File not found");
     }
 }

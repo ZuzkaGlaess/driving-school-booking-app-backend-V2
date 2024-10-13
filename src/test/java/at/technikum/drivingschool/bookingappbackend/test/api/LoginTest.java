@@ -64,7 +64,7 @@ public class LoginTest {
                 .andExpect(status().isUnauthorized())
                 .andExpect(content()
                         .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("error", is("Unauthorized")))
+                .andExpect(jsonPath("status", is("error")))
                 .andExpect(jsonPath("message", is("Bad credentials")));
 
     }

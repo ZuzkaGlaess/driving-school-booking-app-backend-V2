@@ -1,25 +1,33 @@
-package at.technikum.drivingschool.bookingappbackend.repository;
+package at.technikum.drivingschool.bookingappbackend.test.repository;
 
 import at.technikum.drivingschool.bookingappbackend.model.Country;
 import at.technikum.drivingschool.bookingappbackend.model.EGender;
 import at.technikum.drivingschool.bookingappbackend.model.User;
+import at.technikum.drivingschool.bookingappbackend.repository.UserRepository;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.TestPropertySource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 // TODO: finish test class
-//@DataJpaTest
+@DataJpaTest()
+@TestPropertySource("classpath:application-test.properties")
 public class UserRepositoryTest {
-    // @Autowired
+
+    @Autowired
     private UserRepository userRepository;
 
-    // TODO: finish test1
-    //@Test
-    void injectedComponentsAreNotNull(){
+    @Test
+    @Order(1)
+    public void injectedComponentsAreNotNull() {
         assertThat(userRepository).isNotNull();
     }
 
-    // TODO: finish test2
-    //@Test
+    @Test
+    @Order(2)
     void whenSaved_thenFindsByName() {
         userRepository.save(new User(
                 "Zuzka",
@@ -32,4 +40,8 @@ public class UserRepositoryTest {
                 );
         assertThat(userRepository.findByUsername("Zuzka")).isNotNull();
     }
+
+    // TODO: user update test order3
+    // TODO: user delete test order4
+
 }

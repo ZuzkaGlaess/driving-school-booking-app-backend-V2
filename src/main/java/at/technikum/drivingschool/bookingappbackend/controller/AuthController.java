@@ -5,6 +5,7 @@ import at.technikum.drivingschool.bookingappbackend.dto.request.SignupRequest;
 import at.technikum.drivingschool.bookingappbackend.dto.response.CountryListResponse;
 import at.technikum.drivingschool.bookingappbackend.dto.response.MessageResponse;
 import at.technikum.drivingschool.bookingappbackend.dto.response.UserInfoResponse;
+import at.technikum.drivingschool.bookingappbackend.exception.UserAlreadyExistsException;
 import at.technikum.drivingschool.bookingappbackend.model.Country;
 import at.technikum.drivingschool.bookingappbackend.security.jwt.JwtUtils;
 import at.technikum.drivingschool.bookingappbackend.security.services.UserDetailsImpl;
@@ -79,7 +80,7 @@ public class AuthController {
   public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
 
     if(userService.userAlreadyExists(signUpRequest.getUsername(), signUpRequest.getEmail())) {
-        return ResponseEntity.badRequest().body(new MessageResponse("Error: Username or Email is already in use!"));
+      throw new UserAlreadyExistsException("Username or Email is already in use!");
     }
 
     userService.registerUser(signUpRequest.getUsername(),signUpRequest.getEmail(),signUpRequest.getPassword(),signUpRequest.getGender(),signUpRequest.getOther(),signUpRequest.getCountry(),"");

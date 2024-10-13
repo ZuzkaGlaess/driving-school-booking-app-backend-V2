@@ -3,6 +3,7 @@ package at.technikum.drivingschool.bookingappbackend.controller;
 import at.technikum.drivingschool.bookingappbackend.dto.request.EventRequest;
 import at.technikum.drivingschool.bookingappbackend.dto.request.UpdateEventRequest;
 import at.technikum.drivingschool.bookingappbackend.dto.response.EventListResponse;
+import at.technikum.drivingschool.bookingappbackend.exception.EventNotFoundException;
 import at.technikum.drivingschool.bookingappbackend.model.Event;
 import at.technikum.drivingschool.bookingappbackend.service.EventsService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -11,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -44,12 +43,9 @@ public class EventsController {
     @GetMapping("/events/{eventId}")
     @PreAuthorize("hasRole('INSTRUCTOR') or hasRole('ADMIN')")
     public ResponseEntity<?> getEvent(@PathVariable("eventId") Long eventId) {
-        Optional<Event> event = eventsService.getEvent(eventId);
-        if(event.isPresent()) {
-            return ResponseEntity.ok().body(event);
-        }
+        Event event = eventsService.getEvent(eventId).orElseThrow(() -> new EventNotFoundException("Event not Found with id: " + eventId));
 
-        return ResponseEntity.status(404).body("{\"message\":\"Event not Found\"}");
+        return ResponseEntity.ok().body(event);
     }
 
     /**

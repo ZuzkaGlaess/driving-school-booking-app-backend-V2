@@ -53,7 +53,7 @@ public class ProfilesTest {
     public void getMyProfile() throws Exception {
         String jwtToken = getJWTToken();
 
-        URI uri = new URI("/api/profiles");
+        URI uri = new URI("/api/profile");
         mockMvc.perform(get(uri)
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Authorization", "Bearer " + jwtToken)
@@ -103,7 +103,7 @@ public class ProfilesTest {
     public void deleteStudentProfile() throws Exception {
         String jwtToken = getJWTToken();
 
-        URI uri = new URI("/api/profiles?profileId=3");
+        URI uri = new URI("/api/profiles/3");
         mockMvc.perform(delete(uri)
                 .contentType(MediaType.APPLICATION_JSON)
                 .header("Authorization", "Bearer " + jwtToken)

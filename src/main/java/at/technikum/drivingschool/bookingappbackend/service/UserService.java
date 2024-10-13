@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -38,7 +39,7 @@ public class UserService {
      * get logged in user from security context and search for user in database
      * @return user or null
      */
-    public User getLoggedInUser() {
+    public Optional<User> getLoggedInUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentPrincipalName = authentication.getName();
         return getUser(currentPrincipalName);
@@ -49,14 +50,12 @@ public class UserService {
      * @param userId
      * @return user or null
      */
-    public User getUser(String userId) {
-        Optional<User> user = userRepository.findByUsername(userId);
-        return user.orElse(null);
+    public Optional<User> getUser(String userId) {
+        return userRepository.findByUsername(userId);
     }
 
-    public User getUser(Long userId) {
-        Optional<User> user = userRepository.findById(userId);
-        return user.orElse(null);
+    public Optional<User> getUser(Long userId) {
+        return userRepository.findById(userId);
     }
 
     /**
@@ -113,5 +112,9 @@ public class UserService {
 
     public void deleteUser(User user) {
         userRepository.delete(user);
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 }

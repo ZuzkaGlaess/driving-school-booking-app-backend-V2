@@ -3,6 +3,7 @@ package at.technikum.drivingschool.bookingappbackend.controller;
 import at.technikum.drivingschool.bookingappbackend.dto.request.EventRequest;
 import at.technikum.drivingschool.bookingappbackend.dto.request.UpdateEventRequest;
 import at.technikum.drivingschool.bookingappbackend.dto.response.EventListResponse;
+import at.technikum.drivingschool.bookingappbackend.dto.response.MessageResponse;
 import at.technikum.drivingschool.bookingappbackend.exception.EventNotFoundException;
 import at.technikum.drivingschool.bookingappbackend.model.Event;
 import at.technikum.drivingschool.bookingappbackend.service.EventsService;
@@ -64,7 +65,7 @@ public class EventsController {
                 event.getPrice(),
                 event.getStartDate()
         );
-        return ResponseEntity.ok().body("{\"message\":\"Event saved successfully\"}");
+        return ResponseEntity.ok().body(new MessageResponse("Event saved successfully"));
     }
 
     /**
@@ -84,7 +85,7 @@ public class EventsController {
                 event.getPrice(),
                 event.getStartDate()
         );
-        return ResponseEntity.ok().body("{\"message\":\"Event updated successfully\"}");
+        return ResponseEntity.ok().body(new MessageResponse("Event updated successfully"));
     }
 
     /**
@@ -97,7 +98,7 @@ public class EventsController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteEvent(@PathVariable("eventId") Long eventId) {
         eventsService.deleteEvent(eventId);
-        return ResponseEntity.ok().body("{\"message\":\"Event successfully deleted\"}");
+        return ResponseEntity.ok().body(new MessageResponse("Event successfully deleted"));
     }
 
 

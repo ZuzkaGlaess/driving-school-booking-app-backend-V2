@@ -139,6 +139,17 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public void updateUser(User user, ERole role) {
+        Set<Role> roles = new HashSet<>();
+        Role userRole = roleRepository.findByName(role)
+                .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+        roles.add(userRole);
+
+        user.setRoles(roles);
+
+        userRepository.save(user);
+    }
+
     public void deleteUser(User user) {
         userRepository.delete(user);
     }

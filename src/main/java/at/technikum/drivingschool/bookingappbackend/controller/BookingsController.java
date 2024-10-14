@@ -1,7 +1,9 @@
 package at.technikum.drivingschool.bookingappbackend.controller;
 
 import at.technikum.drivingschool.bookingappbackend.dto.response.BookingListResponse;
+import at.technikum.drivingschool.bookingappbackend.dto.response.MessageResponse;
 import at.technikum.drivingschool.bookingappbackend.exception.BookingNotFoundException;
+import at.technikum.drivingschool.bookingappbackend.exception.EventNotFoundException;
 import at.technikum.drivingschool.bookingappbackend.exception.UserNotFoundException;
 import at.technikum.drivingschool.bookingappbackend.model.*;
 import at.technikum.drivingschool.bookingappbackend.service.BookingsService;
@@ -9,7 +11,6 @@ import at.technikum.drivingschool.bookingappbackend.service.EventsService;
 import at.technikum.drivingschool.bookingappbackend.service.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -93,7 +94,7 @@ public class BookingsController {
         if (event.isPresent()) {
             return ResponseEntity.ok().body(bookingsService.bookEvent(user, event.get()));
         }
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to get event in DB");
+        throw new EventNotFoundException("Failed to get event from DB");
     }
 
     /**
@@ -110,7 +111,7 @@ public class BookingsController {
 
         boolean result = bookingsService.deleteBooking(bookingId, user);
         if (result) {
-            return ResponseEntity.ok().body("Successfully removed booking");
+            return ResponseEntity.ok().body(new MessageResponse("Successfully removed booking"));
         } else {
             throw new BookingNotFoundException("Could not find booking with id " + bookingId);
         }

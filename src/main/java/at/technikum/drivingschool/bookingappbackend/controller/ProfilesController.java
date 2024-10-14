@@ -2,11 +2,13 @@ package at.technikum.drivingschool.bookingappbackend.controller;
 
 import at.technikum.drivingschool.bookingappbackend.dto.request.CreateUserRequest;
 import at.technikum.drivingschool.bookingappbackend.dto.request.ProfileRequest;
+import at.technikum.drivingschool.bookingappbackend.dto.request.UpdateUserRequest;
 import at.technikum.drivingschool.bookingappbackend.dto.response.MessageResponse;
 import at.technikum.drivingschool.bookingappbackend.dto.response.ProfileResponse;
 import at.technikum.drivingschool.bookingappbackend.dto.response.UserListResponse;
 import at.technikum.drivingschool.bookingappbackend.exception.UserAlreadyExistsException;
 import at.technikum.drivingschool.bookingappbackend.exception.UserNotFoundException;
+import at.technikum.drivingschool.bookingappbackend.model.Role;
 import at.technikum.drivingschool.bookingappbackend.model.User;
 import at.technikum.drivingschool.bookingappbackend.service.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -15,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -37,13 +41,14 @@ public class ProfilesController {
     @PreAuthorize("hasRole('ADMIN') or hasRole('INSTRUCTOR') or hasRole('STUDENT')")
     public ResponseEntity<?> getMyUserProfile() {
         User user = userService.getLoggedInUser().orElseThrow(() -> new UserNotFoundException("Failed to get logged in user from db."));
-
+        Optional<Role> role = user.getRoles().stream().findFirst();
         return ResponseEntity.ok().body(new ProfileResponse(
                 user.getId(),
                 user.getUsername(),
                 user.getEmail(),
                 user.getGender(),
-                user.getCountry()
+                user.getCountry(),
+                role.map(Role::getName).orElse(null)
         ));
     }
 
@@ -70,13 +75,14 @@ public class ProfilesController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> getUserProfile(@PathVariable("userId") Long userId) {
         User user = userService.getUser(userId).orElseThrow(() -> new UserNotFoundException("Failed to get logged in user from db."));
-
+        Optional<Role> role = user.getRoles().stream().findFirst();
         return ResponseEntity.ok().body(new ProfileResponse(
                 user.getId(),
                 user.getUsername(),
                 user.getEmail(),
                 user.getGender(),
-                user.getCountry()
+                user.getCountry(),
+                role.map(Role::getName).orElse(null)
         ));
     }
 
@@ -99,7 +105,7 @@ public class ProfilesController {
 
         userService.updateUser(user);
 
-        return ResponseEntity.ok().body("User updated");
+        return ResponseEntity.ok().body(new MessageResponse("User updated successfully"));
     }
 
     /**
@@ -111,7 +117,7 @@ public class ProfilesController {
      */
     @PutMapping("/profiles/{userId}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> updateUserProfile(@PathVariable("userId") Long userId, @Valid @RequestBody ProfileRequest profile) {
+    public ResponseEntity<?> updateUserProfile(@PathVariable("userId") Long userId, @Valid @RequestBody UpdateUserRequest profile) {
         User user = userService.getUser(userId).orElseThrow(() -> new UserNotFoundException("Failed to get user from db."));
 
         user.setUsername(profile.getUsername());
@@ -120,9 +126,9 @@ public class ProfilesController {
         user.setGender(profile.getGender());
         user.setCountry(profile.getCountry());
 
-        userService.updateUser(user);
+        userService.updateUser(user, profile.getRole());
 
-        return ResponseEntity.ok().body("User updated");
+        return ResponseEntity.ok().body(new MessageResponse("User updated successfully"));
     }
 
     /**

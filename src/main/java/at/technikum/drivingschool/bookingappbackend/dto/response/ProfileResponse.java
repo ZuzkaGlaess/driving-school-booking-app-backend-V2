@@ -2,6 +2,7 @@ package at.technikum.drivingschool.bookingappbackend.dto.response;
 
 import at.technikum.drivingschool.bookingappbackend.model.Country;
 import at.technikum.drivingschool.bookingappbackend.model.EGender;
+import at.technikum.drivingschool.bookingappbackend.model.ERole;
 
 
 public class ProfileResponse {
@@ -10,13 +11,15 @@ public class ProfileResponse {
 	private String email;
 	private EGender gender;
 	private Country country;
+	private ERole role;
 
-	public ProfileResponse(Long id, String username, String email, EGender gender, Country country) {
+	public ProfileResponse(Long id, String username, String email, EGender gender, Country country, ERole role) {
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.gender = gender;
 		this.country = country;
+		this.role = role;
 	}
 
 	public Long getId() {
@@ -57,5 +60,13 @@ public class ProfileResponse {
 
 	public void setCountry(Country country) {
 		this.country = country;
+	}
+
+	public ERole getRole() {
+		return role;
+	}
+
+	public void setRole(ERole role) {
+		this.role = role;
 	}
 }

@@ -33,6 +33,26 @@ public class ProfilesController {
     }
 
     /**
+     * Retrieves the profile of the loggedin user
+     * @return
+     */
+    @CrossOrigin(origins = "*", maxAge = 3600)
+    @GetMapping("/profile")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('INSTRUCTOR') or hasRole('STUDENT')")
+    public ResponseEntity<?> getMyUserProfile() {
+        User user = userService.getLoggedInUser().orElseThrow(() -> new UserNotFoundException("Failed to get logged in user from db."));
+        Optional<Role> role = user.getRoles().stream().findFirst();
+        return ResponseEntity.ok().body(new ProfileResponse(
+                user.getId(),
+                user.getUsername(),
+                user.getEmail(),
+                user.getGender(),
+                user.getCountry(),
+                role.map(Role::getName).orElse(null)
+        ));
+    }
+
+    /**
      * Retrieves all profiles from db, only for Admin
      * @return
      */
@@ -127,12 +147,6 @@ public class ProfilesController {
         return ResponseEntity.ok().body(new MessageResponse("User deleted"));
     }
 
-    /**
-     * Create a new user, only for Admins
-     * *
-     * @param createUserRequest
-     * @return
-     */
     @PostMapping("/profiles")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> createUser(@Valid @RequestBody CreateUserRequest createUserRequest) {
@@ -151,25 +165,5 @@ public class ProfilesController {
                 "");
 
         return ResponseEntity.ok(new MessageResponse("User created successfully!"));
-    }
-
-    /**
-     * Retrieves the profile of the logged-in user
-     * @return
-     */
-    @CrossOrigin(origins = "*", maxAge = 3600)
-    @GetMapping("/profile")
-    @PreAuthorize("hasRole('ADMIN') or hasRole('INSTRUCTOR') or hasRole('STUDENT')")
-    public ResponseEntity<?> getMyUserProfile() {
-        User user = userService.getLoggedInUser().orElseThrow(() -> new UserNotFoundException("Failed to get logged in user from db."));
-        Optional<Role> role = user.getRoles().stream().findFirst();
-        return ResponseEntity.ok().body(new ProfileResponse(
-                user.getId(),
-                user.getUsername(),
-                user.getEmail(),
-                user.getGender(),
-                user.getCountry(),
-                role.map(Role::getName).orElse(null)
-        ));
     }
 }

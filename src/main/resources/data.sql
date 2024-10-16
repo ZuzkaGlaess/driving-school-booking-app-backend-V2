@@ -5,6 +5,8 @@ INSERT INTO roles (name) VALUES ('ROLE_ADMIN');
 
 -- List of Countries
 INSERT INTO country (name) VALUES ('Austria');
+INSERT INTO country (name) VALUES ('Germany');
+INSERT INTO country (name) VALUES ('Switzerland');
 INSERT INTO country (name) VALUES ('Afghanistan');
 INSERT INTO country (name) VALUES ('Albania');
 INSERT INTO country (name) VALUES ('Algeria');
@@ -67,7 +69,6 @@ INSERT INTO country (name) VALUES ('France');
 INSERT INTO country (name) VALUES ('Gabon');
 INSERT INTO country (name) VALUES ('Gambia');
 INSERT INTO country (name) VALUES ('Georgia');
-INSERT INTO country (name) VALUES ('Germany');
 INSERT INTO country (name) VALUES ('Ghana');
 INSERT INTO country (name) VALUES ('Greece');
 INSERT INTO country (name) VALUES ('Grenada');
@@ -170,7 +171,6 @@ INSERT INTO country (name) VALUES ('Sri Lanka');
 INSERT INTO country (name) VALUES ('Sudan');
 INSERT INTO country (name) VALUES ('Suriname');
 INSERT INTO country (name) VALUES ('Sweden');
-INSERT INTO country (name) VALUES ('Switzerland');
 INSERT INTO country (name) VALUES ('Syria');
 INSERT INTO country (name) VALUES ('Taiwan');
 INSERT INTO country (name) VALUES ('Tajikistan');
@@ -209,14 +209,15 @@ insert into user_roles (role_id, user_id) values (2, 2);
 insert into users (country_id,email,gender,other,password,username,created_on,last_updated_on) values (1,'student@gmail.com',1,'','$2a$10$mHLqs6s4u1kkDrg0vSGGTe.kvEscJ/mWp0hJx0GWcIHoWr.ps9yFi','Student', NOW(), NOW());
 insert into user_roles (role_id, user_id) values (1, 3);
 -- Add Student2 User
--- insert into users (country_id,email,gender,other,password,username,created_on,last_updated_on) values (1,'student2@gmail.com',0,'','$2a$10$ShzMNYmJzhpmcvSY3iIbM.OWC8GlyDEZ66N6fFZ.IswG/iPeUPPM2','Student2', NOW(), NOW());
--- insert into user_roles (role_id, user_id) values (1, 4);
+insert into users (country_id,email,gender,other,password,username,created_on,last_updated_on) values (1,'student2@gmail.com',0,'','$2a$10$ShzMNYmJzhpmcvSY3iIbM.OWC8GlyDEZ66N6fFZ.IswG/iPeUPPM2','Student2', NOW(), NOW());
+insert into user_roles (role_id, user_id) values (1, 4);
 -- Add Student3 User
--- insert into users (country_id,email,gender,other,password,username,created_on,last_updated_on) values (1,'student3@gmail.com',1,'','$2a$10$pBTeRRwCEOTKmyh8d4e95.bS6vRieOvGPeWSlBl48v1k1j5Ug3Pdq','Student3', NOW(), NOW());
--- insert into user_roles (role_id, user_id) values (1, 5);
+insert into users (country_id,email,gender,other,password,username,created_on,last_updated_on) values (1,'student3@gmail.com',1,'','$2a$10$pBTeRRwCEOTKmyh8d4e95.bS6vRieOvGPeWSlBl48v1k1j5Ug3Pdq','Student3', NOW(), NOW());
+insert into user_roles (role_id, user_id) values (1, 5);
 -- Add Instructor2 User
 -- insert into users (country_id,email,gender,other,password,username,created_on,last_updated_on) values (1,'instructor@gmail.com',1,'','$2a$10$kz/zbH5Dcq6GKeHpGABbZOXX16SAgc0Lyd8pYuZV7eBHkX5Nsd2Bu','Instructor', NOW(), NOW());
 -- insert into user_roles (role_id, user_id) values (2, 6);
+
 -- List of Courses
 -- insert into events (id, price, start_date, title, event_status, event_type)  values (1, 500, '2024-11-15', 'Class A Course', 1, 1);
 -- insert into events (id, price, start_date, title, event_status, event_type)  values (2, 200, '2024-11-21', 'Class A Exam', 1, 4);

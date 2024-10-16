@@ -215,11 +215,12 @@ insert into user_roles (role_id, user_id) values (1, 4);
 insert into users (country_id,email,gender,other,password,username,created_on,last_updated_on) values (1,'student3@gmail.com',1,'','$2a$10$pBTeRRwCEOTKmyh8d4e95.bS6vRieOvGPeWSlBl48v1k1j5Ug3Pdq','Student3', NOW(), NOW());
 insert into user_roles (role_id, user_id) values (1, 5);
 -- Add Instructor2 User
--- insert into users (country_id,email,gender,other,password,username,created_on,last_updated_on) values (1,'instructor@gmail.com',1,'','$2a$10$kz/zbH5Dcq6GKeHpGABbZOXX16SAgc0Lyd8pYuZV7eBHkX5Nsd2Bu','Instructor', NOW(), NOW());
--- insert into user_roles (role_id, user_id) values (2, 6);
+insert into users (country_id,email,gender,other,password,username,created_on,last_updated_on) values (1,'instructor2@gmail.com',1,'','$2a$10$uJvx3X6bacgNM.NN04te1umIgFeMsLD1I/wsMCKzdFRyBU/EokMSS','Instructor2', NOW(), NOW());
+insert into user_roles (role_id, user_id) values (2, 6);
 
 -- List of Courses
 -- insert into events (id, price, start_date, title, event_status, event_type)  values (1, 500, '2024-11-15', 'Class A Course', 1, 1);
 -- insert into events (id, price, start_date, title, event_status, event_type)  values (2, 200, '2024-11-21', 'Class A Exam', 1, 4);
 -- insert into events (id, price, start_date, title, event_status, event_type)  values (3, 800, '2024-11-25', 'Class A Praxis', 1, 2);
 
+-- password generator: https://bcrypt-generator.com/

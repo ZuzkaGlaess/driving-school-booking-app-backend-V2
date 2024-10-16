@@ -226,6 +226,7 @@ insert into user_roles (role_id, user_id) values (2, 6);
 -- insert into events (id, price, start_date, title, event_status, event_type)  values (2, 200, '2024-11-21', 'Class A Exam', 1, 4);
 -- insert into events (id, price, start_date, title, event_status, event_type)  values (3, 800, '2024-11-25', 'Class A Praxis', 1, 2);
 
+
 insert into events (id, price, start_date, title, event_status, event_type)
 values (4, 1200, '2024-11-05', 'Motorbike Class A', 1, 1);
 

@@ -218,9 +218,58 @@ insert into user_roles (role_id, user_id) values (1, 5);
 insert into users (country_id,email,gender,other,password,username,created_on,last_updated_on) values (1,'instructor2@gmail.com',1,'','$2a$10$uJvx3X6bacgNM.NN04te1umIgFeMsLD1I/wsMCKzdFRyBU/EokMSS','Instructor2', NOW(), NOW());
 insert into user_roles (role_id, user_id) values (2, 6);
 
+-- password generator: https://bcrypt-generator.com/
+
+
 -- List of Courses
 -- insert into events (id, price, start_date, title, event_status, event_type)  values (1, 500, '2024-11-15', 'Class A Course', 1, 1);
 -- insert into events (id, price, start_date, title, event_status, event_type)  values (2, 200, '2024-11-21', 'Class A Exam', 1, 4);
 -- insert into events (id, price, start_date, title, event_status, event_type)  values (3, 800, '2024-11-25', 'Class A Praxis', 1, 2);
 
--- password generator: https://bcrypt-generator.com/
+insert into events (id, price, start_date, title, event_status, event_type)
+values (1, 1200, '2024-11-05', 'Motorbike Class A', 1, 1);
+
+insert into events (id, price, start_date, title, event_status, event_type)
+values (2, 900, '2024-11-10', 'Car Class B', 1, 1);
+
+insert into events (id, price, start_date, title, event_status, event_type)
+values (3, 1100, '2024-11-15', 'L17 - Training', 1, 1);
+
+insert into events (id, price, start_date, title, event_status, event_type)
+values (4, 800, '2024-11-20', 'Dual Training (Private)', 1, 2);
+
+insert into events (id, price, start_date, title, event_status, event_type)
+values (5, 750, '2024-11-25', 'Safety Driving Training', 1, 2);
+
+insert into events (id, price, start_date, title, event_status, event_type)
+values (6, 600, '2024-11-28', 'Foreign Language Training (English)', 1, 3);
+
+insert into events (id, price, start_date, title, event_status, event_type)
+values (7, 850, '2024-12-01', 'Private Lessons (Theory / Practice)', 1, 2);
+
+insert into events (id, price, start_date, title, event_status, event_type)
+values (8, 500, '2024-12-05', 'Road Safety Education', 1, 3);
+
+insert into events (id, price, start_date, title, event_status, event_type)
+values (9, 950, '2024-12-08', 'Code 111 (125ccm)', 1, 1);
+
+insert into events (id, price, start_date, title, event_status, event_type)
+values (10, 1000, '2024-12-12', 'Multi-Phase Training', 1, 2);
+
+insert into events (id, price, start_date, title, event_status, event_type)
+values (11, 700, '2024-12-15', 'Refresher Driving Course', 1, 2);
+
+insert into events (id, price, start_date, title, event_status, event_type)
+values (12, 300, '2024-12-18', 'First Aid Course', 1, 3);
+
+insert into events (id, price, start_date, title, event_status, event_type)
+values (13, 800, '2024-12-20', 'Follow-up Training', 1, 2);
+
+insert into events (id, price, start_date, title, event_status, event_type)
+values (14, 600, '2025-01-05', 'Automatic Education', 1, 1);
+
+insert into events (id, price, start_date, title, event_status, event_type)
+values (15, 400, '2025-01-10', 'Elderly Check-up', 1, 3);
+
+insert into events (id, price, start_date, title, event_status, event_type)
+values (16, 500, '2025-01-15', 'Driving Licence Check-up', 1, 3);

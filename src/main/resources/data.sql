@@ -218,9 +218,104 @@ insert into user_roles (role_id, user_id) values (1, 5);
 insert into users (country_id,email,gender,other,password,username,created_on,last_updated_on) values (1,'instructor2@gmail.com',1,'','$2a$10$uJvx3X6bacgNM.NN04te1umIgFeMsLD1I/wsMCKzdFRyBU/EokMSS','Instructor2', NOW(), NOW());
 insert into user_roles (role_id, user_id) values (2, 6);
 
+<<<<<<< Updated upstream
 -- List of Courses
 -- insert into events (id, price, start_date, title, event_status, event_type)  values (1, 500, '2024-11-15', 'Class A Course', 1, 1);
 -- insert into events (id, price, start_date, title, event_status, event_type)  values (2, 200, '2024-11-21', 'Class A Exam', 1, 4);
 -- insert into events (id, price, start_date, title, event_status, event_type)  values (3, 800, '2024-11-25', 'Class A Praxis', 1, 2);
 
 -- password generator: https://bcrypt-generator.com/
+=======
+-- password generator: https://bcrypt-generator.com/
+
+
+-- List of Courses (old)
+-- insert into events (id, price, start_date, title, event_status, event_type) values (1, 500, '2024-11-15', 'Class A Course', 1, 1);
+-- insert into events (id, price, start_date, title, event_status, event_type) values (2, 200, '2024-11-21', 'Class A Exam', 1, 4);
+-- insert into events (id, price, start_date, title, event_status, event_type) values (3, 800, '2024-11-25', 'Class A Praxis', 1, 2);
+
+
+-- corrected Statement
+insert into events (price, start_date, title, event_status, event_type) values (200, '2024-11-21', 'Class A Course', 'OPEN', 'THEORY_EXAM');
+insert into events (price, start_date, title, event_status, event_type) values (200, '2024-11-21', 'Class A Praxis', 'OPEN', 'DRIVING');
+insert into events (price, start_date, title, event_status, event_type) values (800, '2024-11-25', 'Class A Test', 'OPEN', 'THEORY_EXAM');
+
+/*
+EVENT-STATUS:
+=============
+  1  OPEN,
+  2  FULL,
+  3  CANCELED
+
+EVENT-TYPES:
+=============
+  1  THEORY,
+  2  DRIVING,
+  3  FIRST_AID,
+  4  THEORY_EXAM,
+  5  PRACTICAL_EXAM
+*/
+
+-- Theory
+insert into events (price, start_date, title, event_status, event_type)
+values (1200, '2024-11-05', 'Motorbike Class A', 'OPEN', 'THEORY');
+
+insert into events (price, start_date, title, event_status, event_type)
+values (900, '2024-11-10', 'Car Class B', 'OPEN', 'THEORY');
+
+insert into events (price, start_date, title, event_status, event_type)
+values (500, '2024-12-05', 'Road Safety Education', 'OPEN', 'THEORY');
+
+insert into events (price, start_date, title, event_status, event_type)
+values (850, '2024-12-01', 'Private Lesson (Theory)', 'OPEN', 'THEORY');
+
+-- Driving
+insert into events (price, start_date, title, event_status, event_type)
+values (1100, '2024-11-15', 'L17 - Training', 'OPEN', 'DRIVING');
+
+insert into events (price, start_date, title, event_status, event_type)
+values (800, '2024-11-20', 'Dual Training (Private)', 'OPEN', 'DRIVING');
+
+insert into events (price, start_date, title, event_status, event_type)
+values (750, '2024-11-25', 'Safety Driving Training', 'OPEN', 'DRIVING');
+
+insert into events (price, start_date, title, event_status, event_type)
+values (600, '2024-11-28', 'Foreign Language Training (English)', 'OPEN', 'DRIVING');
+
+insert into events (price, start_date, title, event_status, event_type)
+values (850, '2024-12-01', 'Private Lesson (Practice)', 'OPEN', 'DRIVING');
+
+insert into events (price, start_date, title, event_status, event_type)
+values (950, '2024-12-08', 'Code 111 (125ccm)', 'OPEN', 'DRIVING');
+
+insert into events (price, start_date, title, event_status, event_type)
+values (1000, '2024-12-12', 'Multi-Phase Training', 'OPEN', 'DRIVING');
+
+insert into events (price, start_date, title, event_status, event_type)
+values (700, '2024-12-15', 'Refresher Driving Course', 'OPEN', 'DRIVING');
+
+insert into events (price, start_date, title, event_status, event_type)
+values (800, '2024-12-20', 'Follow-up Training', 'OPEN', 'DRIVING');
+
+insert into events (price, start_date, title, event_status, event_type)
+values (600, '2025-01-05', 'Automatic Education', 'OPEN', 'DRIVING');
+
+insert into events (price, start_date, title, event_status, event_type)
+values (400, '2025-01-10', 'Elderly Check-up', 'OPEN', 'DRIVING');
+
+insert into events (price, start_date, title, event_status, event_type)
+values (500, '2025-01-15', 'Driving Licence Check-up', 'OPEN', 'DRIVING');
+
+
+-- First-Aid-Courses
+insert into events (price, start_date, title, event_status, event_type)
+values (150, '2024-12-18', 'First Aid Course', 'OPEN', 'FIRST_AID');
+
+
+-- Exams
+insert into events (price, start_date, title, event_status, event_type)
+values (50, '2025-02-03', 'Theory-TEST-Day (for all Classes)', 'OPEN', 'THEORY_EXAM');
+
+insert into events (price, start_date, title, event_status, event_type)
+values (75, '2025-02-10', 'Driving-TEST-Day (for all Classes)', 'OPEN', 'PRACTICAL_EXAM');
+>>>>>>> Stashed changes

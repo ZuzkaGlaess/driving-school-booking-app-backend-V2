@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
@@ -32,13 +34,20 @@ public class UserServiceTest {
     @Test
     @Order(2)
     void updateUser() throws Exception {
-
+        Optional<User> optionalUser = userService.findByUsername("sebastian");
+        assertThat(optionalUser.isPresent());
+        User user = optionalUser.get();
+        user.setEmail("sebastian2@gmail.com");
+        userService.updateUser(user);
     }
 
     @Test
     @Order(3)
     void deleteUser() throws Exception {
-
+        Optional<User> optionalUser = userService.findByUsername("sebastian");
+        assertThat(optionalUser.isPresent());
+        User user = optionalUser.get();
+        userService.deleteUser(user);
     }
 
 }

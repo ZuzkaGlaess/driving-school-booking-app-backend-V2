@@ -8,7 +8,6 @@ import at.technikum.drivingschool.bookingappbackend.service.IFilesService;
 import at.technikum.drivingschool.bookingappbackend.service.UserService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +15,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Base64;
 
 /**
@@ -78,8 +75,7 @@ public class FilesController {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            InputStream is = new ByteArrayInputStream(coded);
-            InputStreamResource resource = new InputStreamResource(is);
+
             MediaType contentType = name.endsWith(".jpg") ? MediaType.IMAGE_JPEG :name.endsWith(".jpeg") ? MediaType.IMAGE_JPEG : name.endsWith(".png") ? MediaType.IMAGE_PNG : MediaType.IMAGE_GIF;
 
                 return ResponseEntity.ok()

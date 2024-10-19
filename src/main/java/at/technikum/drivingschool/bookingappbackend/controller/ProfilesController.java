@@ -48,7 +48,8 @@ public class ProfilesController {
                 user.getEmail(),
                 user.getGender(),
                 user.getCountry(),
-                role.map(Role::getName).orElse(null)
+                role.map(Role::getName).orElse(null),
+                user.getProfilePictureRef()
         ));
     }
 
@@ -82,7 +83,8 @@ public class ProfilesController {
                 user.getEmail(),
                 user.getGender(),
                 user.getCountry(),
-                role.map(Role::getName).orElse(null)
+                role.map(Role::getName).orElse(null),
+                user.getProfilePictureRef()
         ));
     }
 

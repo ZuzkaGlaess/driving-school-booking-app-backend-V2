@@ -13,13 +13,16 @@ public class ProfileResponse {
 	private Country country;
 	private ERole role;
 
-	public ProfileResponse(Long id, String username, String email, EGender gender, Country country, ERole role) {
+	private String profilePictureRef;
+
+	public ProfileResponse(Long id, String username, String email, EGender gender, Country country, ERole role, String profilePictureRef) {
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.gender = gender;
 		this.country = country;
 		this.role = role;
+		this.profilePictureRef = profilePictureRef;
 	}
 
 	public Long getId() {
@@ -68,5 +71,13 @@ public class ProfileResponse {
 
 	public void setRole(ERole role) {
 		this.role = role;
+	}
+
+	public String getProfilePictureRef() {
+		return profilePictureRef;
+	}
+
+	public void setProfilePictureRef(String profilePictureRef) {
+		this.profilePictureRef = profilePictureRef;
 	}
 }

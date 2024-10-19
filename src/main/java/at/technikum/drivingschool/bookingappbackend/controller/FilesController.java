@@ -10,14 +10,16 @@ import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Base64;
 
 /**
  * Handling picture up- and download of users
@@ -65,23 +67,28 @@ public class FilesController {
     /**
      * Download of an existing picture
      */
-    @GetMapping(value = "/pictures/{name}", produces = {MediaType.APPLICATION_OCTET_STREAM_VALUE})
+    @GetMapping(value = "/pictures/{name}")
     @PreAuthorize("hasRole('ADMIN') or hasRole('INSTRUCTOR') or hasRole('STUDENT')")
-    public ResponseEntity<InputStreamResource> downloadPicture(@PathVariable("name") String name) {
+    public ResponseEntity<?> downloadPicture(@PathVariable("name") String name) {
         Resource file = filesService.getFile(name);
         if (file != null) {
-            HttpHeaders headers = new HttpHeaders();
-            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + name);
-
+            byte[] coded = new byte[0];
             try {
-                return ResponseEntity.ok()
-                        .headers(headers)
-                        .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                        .body(new InputStreamResource(file.getInputStream()));
-            } catch (IOException ex) {
-                throw new FileDownloadException(ex);
+                coded = Base64.getEncoder().encode(file.getContentAsByteArray());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
+            InputStream is = new ByteArrayInputStream(coded);
+            InputStreamResource resource = new InputStreamResource(is);
+            MediaType contentType = name.endsWith(".jpg") ? MediaType.IMAGE_JPEG :name.endsWith(".jpeg") ? MediaType.IMAGE_JPEG : name.endsWith(".png") ? MediaType.IMAGE_PNG : MediaType.IMAGE_GIF;
+
+                return ResponseEntity.ok()
+                        .contentType(contentType)
+                        //.contentType(MediaType.APPLICATION_OCTET_STREAM)
+                        .body(new String(coded));
+
         }
         throw new FileDownloadException("File not found");
     }
 }
+

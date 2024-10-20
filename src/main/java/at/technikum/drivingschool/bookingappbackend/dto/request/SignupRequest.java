@@ -4,6 +4,7 @@ import at.technikum.drivingschool.bookingappbackend.model.Country;
 import at.technikum.drivingschool.bookingappbackend.model.EGender;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
  
 public class SignupRequest {
@@ -18,7 +19,7 @@ public class SignupRequest {
 
     @NotBlank(message = "Password is not allowed to be empty")
     @Size(min = 8, max = 30, message = "Password has to have min. 8 and max. 30 characters")
-    //@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,30}$")
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,30}$", message = "Password has to contain at least one uppercase, low case, number and special character: @#$%^&+=")
     private String password;
 
     private EGender gender;

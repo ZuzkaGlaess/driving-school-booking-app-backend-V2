@@ -1,12 +1,9 @@
 package at.technikum.drivingschool.bookingappbackend.security.jwt;
 
-import java.security.Key;
-import java.util.Date;
-
 import at.technikum.drivingschool.bookingappbackend.security.services.UserDetailsImpl;
+import io.jsonwebtoken.*;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-
 import jakarta.xml.bind.DatatypeConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +13,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.util.WebUtils;
 
-import io.jsonwebtoken.*;
-
 import javax.crypto.spec.SecretKeySpec;
+import java.security.Key;
+import java.util.Date;
 
 /**
  * JWT Utility class
@@ -72,8 +69,7 @@ public class JwtUtils {
    */
   public ResponseCookie generateJwtCookie(UserDetailsImpl userPrincipal) {
     String jwt = generateTokenFromUsername(userPrincipal.getUsername());
-    // TODO: update maxAge to jwtExpirationMs
-    ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt).path("/api").maxAge(24 * 60 * 60).httpOnly(true).build();
+    ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt).path("/api").maxAge(jwtExpirationMs).httpOnly(true).build();
     return cookie;
   }
 

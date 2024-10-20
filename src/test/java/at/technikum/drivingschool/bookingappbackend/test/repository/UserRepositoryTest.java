@@ -14,7 +14,6 @@ import org.springframework.test.context.TestPropertySource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-// TODO: finish test class
 @DataJpaTest()
 @TestPropertySource("classpath:application-test.properties")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -44,7 +43,24 @@ public class UserRepositoryTest {
         assertThat(userRepository.findByUsername("Zuzka")).isNotNull();
     }
 
-    // TODO: user update test order3
-    // TODO: user delete test order4
+//    @Test
+//    @Order(3)
+//    void findsUserByName_updatesUser() {
+//        Optional<User> user = userRepository.findByUsername("Zuzka");
+//        assertThat(user).isNotNull();
+//
+//        User u = user.get();
+//        u.setEmail("zuzka@gmail.com");
+//        assertThat(userRepository.save(u)).isNotNull();
+//    }
+//
+//    @Test
+//    @Order(4)
+//    void findsUserByName_deletesUser() {
+//        Optional<User> user = userRepository.findByUsername("Zuzka");
+//        assertThat(user).isNotNull();
+//        User u = user.get();
+//        userRepository.delete(u);
+//    }
 
 }

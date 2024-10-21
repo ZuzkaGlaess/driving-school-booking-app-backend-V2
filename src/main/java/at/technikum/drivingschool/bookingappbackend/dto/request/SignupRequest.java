@@ -14,13 +14,13 @@ public class SignupRequest {
 
     @NotBlank(message = "Username not allowed to be empty")
     @Size(max = 50, message = "Email max. 50 characters")
-    @Email(message = "Must be a well formated email address")
+    @Email(message = "Must be a well formatted email address")
     private String email;
 
     @NotBlank(message = "Password is not allowed to be empty")
     @Size(min = 8, max = 30, message = "Password has to have min. 8 and max. 30 characters")
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,30}$",
-            message = "Password has to contain at least one uppercase, low case, number and special character: @#$%^&+=")
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!?])(?=\\S+$).{8,30}$",
+            message = "Password has to contain at least one uppercase, low case, number and special character: @#$%^&+=!?")
     private String password;
 
     private EGender gender;

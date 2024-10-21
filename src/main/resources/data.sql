@@ -251,65 +251,65 @@ EVENT-TYPES:
 -- List of all Events
 
 -- Theory
-insert into events (price, start_date, title, event_status, event_type)
-values (1200, '2024-11-05', 'Motorbike Class A', 'OPEN', 'THEORY');
+insert into events (price, start_date, title, event_status, event_type,created_on,last_updated_on)
+values (1200, '2024-11-05', 'Motorbike Class A', 'OPEN', 'THEORY', NOW(), NOW());
 
-insert into events (price, start_date, title, event_status, event_type)
-values (900, '2024-11-10', 'Car Class B', 'OPEN', 'THEORY');
+insert into events (price, start_date, title, event_status, event_type,created_on,last_updated_on)
+values (900, '2024-11-10', 'Car Class B', 'OPEN', 'THEORY', NOW(), NOW());
 
-insert into events (price, start_date, title, event_status, event_type)
-values (500, '2024-12-05', 'Road Safety Education', 'OPEN', 'THEORY');
+insert into events (price, start_date, title, event_status, event_type,created_on,last_updated_on)
+values (500, '2024-12-05', 'Road Safety Education', 'OPEN', 'THEORY', NOW(), NOW());
 
-insert into events (price, start_date, title, event_status, event_type)
-values (850, '2024-12-01', 'Private Lesson (Theory)', 'OPEN', 'THEORY');
+insert into events (price, start_date, title, event_status, event_type,created_on,last_updated_on)
+values (850, '2024-12-01', 'Private Lesson (Theory)', 'OPEN', 'THEORY', NOW(), NOW());
 
 
 -- Driving
-insert into events (price, start_date, title, event_status, event_type)
-values (1100, '2024-11-15', 'L17 - Training', 'OPEN', 'DRIVING');
+insert into events (price, start_date, title, event_status, event_type,created_on,last_updated_on)
+values (1100, '2024-11-15', 'L17 - Training', 'OPEN', 'DRIVING', NOW(), NOW());
 
-insert into events (price, start_date, title, event_status, event_type)
-values (800, '2024-11-20', 'Dual Training (Private)', 'OPEN', 'DRIVING');
+insert into events (price, start_date, title, event_status, event_type,created_on,last_updated_on)
+values (800, '2024-11-20', 'Dual Training (Private)', 'OPEN', 'DRIVING', NOW(), NOW());
 
-insert into events (price, start_date, title, event_status, event_type)
-values (750, '2024-11-25', 'Safety Driving Training', 'OPEN', 'DRIVING');
+insert into events (price, start_date, title, event_status, event_type,created_on,last_updated_on)
+values (750, '2024-11-25', 'Safety Driving Training', 'OPEN', 'DRIVING', NOW(), NOW());
 
-insert into events (price, start_date, title, event_status, event_type)
-values (600, '2024-11-28', 'Foreign Language Training (English)', 'OPEN', 'DRIVING');
+insert into events (price, start_date, title, event_status, event_type,created_on,last_updated_on)
+values (600, '2024-11-28', 'Foreign Language Training (English)', 'OPEN', 'DRIVING', NOW(), NOW());
 
-insert into events (price, start_date, title, event_status, event_type)
-values (850, '2024-12-01', 'Private Lesson (Practice)', 'OPEN', 'DRIVING');
+insert into events (price, start_date, title, event_status, event_type,created_on,last_updated_on)
+values (850, '2024-12-01', 'Private Lesson (Practice)', 'OPEN', 'DRIVING', NOW(), NOW());
 
-insert into events (price, start_date, title, event_status, event_type)
-values (950, '2024-12-08', 'Code 111 (125ccm)', 'OPEN', 'DRIVING');
+insert into events (price, start_date, title, event_status, event_type,created_on,last_updated_on)
+values (950, '2024-12-08', 'Code 111 (125ccm)', 'OPEN', 'DRIVING', NOW(), NOW());
 
-insert into events (price, start_date, title, event_status, event_type)
-values (1000, '2024-12-12', 'Multi-Phase Training', 'OPEN', 'DRIVING');
+insert into events (price, start_date, title, event_status, event_type,created_on,last_updated_on)
+values (1000, '2024-12-12', 'Multi-Phase Training', 'OPEN', 'DRIVING', NOW(), NOW());
 
-insert into events (price, start_date, title, event_status, event_type)
-values (700, '2024-12-15', 'Refresher Driving Course', 'OPEN', 'DRIVING');
+insert into events (price, start_date, title, event_status, event_type,created_on,last_updated_on)
+values (700, '2024-12-15', 'Refresher Driving Course', 'OPEN', 'DRIVING', NOW(), NOW());
 
-insert into events (price, start_date, title, event_status, event_type)
-values (800, '2024-12-20', 'Follow-up Training', 'OPEN', 'DRIVING');
+insert into events (price, start_date, title, event_status, event_type,created_on,last_updated_on)
+values (800, '2024-12-20', 'Follow-up Training', 'OPEN', 'DRIVING', NOW(), NOW());
 
-insert into events (price, start_date, title, event_status, event_type)
-values (600, '2025-01-05', 'Automatic Education', 'OPEN', 'DRIVING');
+insert into events (price, start_date, title, event_status, event_type,created_on,last_updated_on)
+values (600, '2025-01-05', 'Automatic Education', 'OPEN', 'DRIVING', NOW(), NOW());
 
-insert into events (price, start_date, title, event_status, event_type)
-values (400, '2025-01-10', 'Elderly Check-up', 'OPEN', 'DRIVING');
+insert into events (price, start_date, title, event_status, event_type,created_on,last_updated_on)
+values (400, '2025-01-10', 'Elderly Check-up', 'OPEN', 'DRIVING', NOW(), NOW());
 
-insert into events (price, start_date, title, event_status, event_type)
-values (500, '2025-01-15', 'Driving Licence Check-up', 'OPEN', 'DRIVING');
+insert into events (price, start_date, title, event_status, event_type,created_on,last_updated_on)
+values (500, '2025-01-15', 'Driving Licence Check-up', 'OPEN', 'DRIVING', NOW(), NOW());
 
 
 -- First-Aid-Courses
-insert into events (price, start_date, title, event_status, event_type)
-values (150, '2024-12-18', 'First Aid Course', 'OPEN', 'FIRST_AID');
+insert into events (price, start_date, title, event_status, event_type,created_on,last_updated_on)
+values (150, '2024-12-18', 'First Aid Course', 'OPEN', 'FIRST_AID', NOW(), NOW());
 
 
 -- Exams
-insert into events (price, start_date, title, event_status, event_type)
-values (50, '2025-02-03', 'Theory-TEST-Day (for all Classes)', 'OPEN', 'THEORY_EXAM');
+insert into events (price, start_date, title, event_status, event_type,created_on,last_updated_on)
+values (50, '2025-02-03', 'Theory-TEST-Day (for all Classes)', 'OPEN', 'THEORY_EXAM', NOW(), NOW());
 
-insert into events (price, start_date, title, event_status, event_type)
-values (75, '2025-02-10', 'Driving-TEST-Day (for all Classes)', 'OPEN', 'PRACTICAL_EXAM');
+insert into events (price, start_date, title, event_status, event_type,created_on,last_updated_on)
+values (75, '2025-02-10', 'Driving-TEST-Day (for all Classes)', 'OPEN', 'PRACTICAL_EXAM', NOW(), NOW());
